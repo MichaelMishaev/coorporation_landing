@@ -1,0 +1,36 @@
+.hero {
+  background: var(--canvas);
+  padding-block: var(--space-16);
+  text-align: center;
+}
+
+.inner {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--content-pad-mobile);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .inner {
+    padding-inline: var(--content-pad);
+  }
+}
+
+.logo {
+  max-width: 420px;
+  width: 100%;
+  height: auto;
+}
+
+.subheading {
+  color: var(--text-secondary);
+  max-width: 48ch;
+}
+
+.caption {
+  color: var(--text-secondary);
+}

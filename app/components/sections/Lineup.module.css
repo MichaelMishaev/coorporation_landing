@@ -1,0 +1,26 @@
+.section {
+  background: var(--canvas-alt);
+  padding-block: var(--space-12);
+}
+
+.inner {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--content-pad-mobile);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .inner {
+    padding-inline: var(--content-pad);
+  }
+}
+
+.photo {
+  width: 100%;
+  height: auto;
+}

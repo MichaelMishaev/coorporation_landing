@@ -1,0 +1,25 @@
+.band {
+  background: var(--canvas-warm);
+  border-block: 1px solid var(--border);
+  padding-block: var(--space-12);
+}
+
+.inner {
+  max-width: 65ch;
+  margin-inline: auto;
+  padding-inline: var(--content-pad-mobile);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.quote {
+  font-style: normal;
+}
+
+.signature {
+  height: 40px;
+  width: auto;
+}

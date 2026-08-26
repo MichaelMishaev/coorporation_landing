@@ -1,0 +1,36 @@
+.section {
+  background: var(--canvas);
+  padding-block: var(--space-12);
+}
+
+.inner {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--content-pad-mobile);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    padding-inline: var(--content-pad);
+    flex-direction: row;
+    gap: var(--space-6);
+  }
+
+  .heading {
+    flex: 1;
+  }
+
+  .copy {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+}
+
+.body {
+  color: var(--text-secondary);
+}
