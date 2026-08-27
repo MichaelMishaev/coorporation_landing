@@ -1,0 +1,43 @@
+.root {
+  --sw-bg: var(--canvas-warm);
+  --sw-ink: var(--text-primary);
+  --sw-ink-soft: var(--text-secondary);
+  --sw-accent: var(--accent-cta);
+  --sw-font-display: "Noto Sans Hebrew", "Noto Sans", ui-sans-serif, system-ui, sans-serif;
+  --sw-font-body: "Noto Sans Hebrew", "Noto Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* The engine's layout is LTR (copy panel on the left, route rail on the
+   right) — the container is rendered dir="ltr" to keep it intact. Content
+   itself is Hebrew, so right-align the copy text for natural reading. */
+.root :global(.sw-copy) {
+  text-align: right;
+}
+
+.root :global(.sw-copy__tags) {
+  justify-content: flex-end;
+}
+
+.root :global(.sw-copy__cta) {
+  justify-content: flex-end;
+}
+
+/* globals.css sets `a { color: inherit }` unlayered, which beats the
+   engine's own (layered) button/brand colors regardless of specificity —
+   cascade layers rank layer membership before specificity. Restate these
+   explicitly, unlayered, so the engine's intended colors win. */
+.root :global(.sw-btn--primary) {
+  color: #fff;
+}
+
+.root :global(.sw-btn--ghost) {
+  color: var(--text-primary);
+}
+
+.root :global(.sw-topcta) {
+  color: #fff;
+}
+
+.root :global(.sw-brand) {
+  color: var(--text-primary);
+}
