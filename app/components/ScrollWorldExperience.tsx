@@ -85,7 +85,7 @@ export function ScrollWorldExperience() {
     container.dataset.mounted = "true";
 
     mountScrollWorld(container, {
-      brand: { name: "עמך ישראל", href: "#top" },
+      brand: { name: "עמך ישראל", href: "#top", mark: "/logo-mark.svg" },
       nav: true,
       atmosphere: true,
       hint: "גללו כדי להמריא",

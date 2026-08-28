@@ -116,8 +116,15 @@ function mountScrollWorld(container, config) {
   const topbar = el('div', 'sw-topbar');
   if (config.brand) {
     const brand = el('a', 'sw-brand'); brand.href = (config.brand.href || '#');
-    brand.appendChild(el('span', 'sw-brand__mark'));
-    const nm = el('span', 'sw-brand__name'); nm.textContent = config.brand.name || ''; brand.appendChild(nm);
+    if (config.brand.mark) {
+      brand.setAttribute('aria-label', config.brand.name || '');
+      const markImg = el('img', 'sw-brand__mark');
+      markImg.src = config.brand.mark; markImg.alt = config.brand.name || ''; markImg.decoding = 'async';
+      brand.appendChild(markImg);
+    } else {
+      brand.appendChild(el('span', 'sw-brand__mark'));
+      const nm = el('span', 'sw-brand__name'); nm.textContent = config.brand.name || ''; brand.appendChild(nm);
+    }
     topbar.appendChild(brand);
   }
   const nav = el('nav', 'sw-nav'); if (config.nav !== false) topbar.appendChild(nav);
@@ -150,11 +157,16 @@ function mountScrollWorld(container, config) {
   // per-section copy / route / nav
   const copies = [], dots = [];
   SECTIONS.forEach((s, i) => {
-    const c = el('article', 'sw-copy'); c.style.setProperty('--sw-accent', s.accent || '');
+    const isFinal = i === N - 1;
+    const showMark = isFinal && config.brand && config.brand.mark;
+    const c = el('article', 'sw-copy' + (isFinal ? ' sw-copy--final' : ''));
+    c.style.setProperty('--sw-accent', s.accent || '');
     c.innerHTML =
       `<span class="sw-copy__num">${pad(i + 1)} / ${pad(N)}</span>` +
       (s.eyebrow ? `<span class="sw-copy__eyebrow">${esc(s.eyebrow)}</span>` : '') +
-      (s.title ? `<h2 class="sw-copy__title">${esc(s.title)}</h2>` : '') +
+      (showMark
+        ? `<img class="sw-copy__mark" src="${esc(config.brand.mark)}" alt="${esc(s.title || config.brand.name || '')}" />`
+        : (s.title ? `<h2 class="sw-copy__title">${esc(s.title)}</h2>` : '')) +
       (s.body ? `<p class="sw-copy__body">${esc(s.body)}</p>` : '') +
       (s.tags && s.tags.length ? `<ul class="sw-copy__tags">${s.tags.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : '') +
       (s.cta ? `<div class="sw-copy__cta">${ctaBtns(s.cta)}</div>` : '');
@@ -376,6 +388,7 @@ function injectCSS() {
   .sw-topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:clamp(14px,2.4vw,26px) clamp(18px,5vw,64px);}
   .sw-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--sw-ink);}
   .sw-brand__mark{width:24px;height:28px;border-radius:7px 7px 10px 10px;background:linear-gradient(160deg,var(--sw-accent),color-mix(in srgb,var(--sw-accent) 60%,#000));box-shadow:0 6px 14px color-mix(in srgb,var(--sw-accent) 40%,transparent);}
+  img.sw-brand__mark{width:auto;height:22px;border-radius:0;background:none;box-shadow:none;object-fit:contain;}
   .sw-brand__name{font-family:var(--sw-font-display);font-weight:700;font-size:1.1rem;}
   .sw-nav{display:flex;gap:4px;padding:5px;background:color-mix(in srgb,#fff 55%,transparent);backdrop-filter:blur(10px);border:1px solid color-mix(in srgb,var(--sw-accent) 16%,transparent);border-radius:999px;}
   .sw-nav__item{font:inherit;font-size:.82rem;color:var(--sw-ink-soft);border:0;background:transparent;cursor:pointer;padding:7px 14px;border-radius:999px;transition:color .25s,background .25s;}
@@ -395,9 +408,20 @@ function injectCSS() {
   .sw-copy__tags{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0;padding:0;}
   .sw-copy__tags li{font-size:.82rem;font-weight:600;color:color-mix(in srgb,var(--sw-accent) 70%,#000);padding:7px 14px;border-radius:999px;background:color-mix(in srgb,var(--sw-accent) 14%,#fff);border:1px solid color-mix(in srgb,var(--sw-accent) 30%,transparent);}
   .sw-copy__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;pointer-events:auto;}
-  .sw-btn{text-decoration:none;font-weight:600;font-size:.95rem;padding:13px 24px;border-radius:999px;transition:transform .2s;}
+  .sw-btn{text-decoration:none;font-weight:600;font-size:.95rem;padding:13px 24px;border-radius:999px;transition:transform .2s,box-shadow .2s;}
   .sw-btn--primary{color:#fff;background:var(--sw-ink);} .sw-btn--primary:hover{transform:translateY(-2px);}
   .sw-btn--ghost{color:var(--sw-ink);border:1.5px solid color-mix(in srgb,var(--sw-ink) 25%,transparent);} .sw-btn--ghost:hover{transform:translateY(-2px);}
+  /* Grand finale — last section trades the plain title for the real brand mark
+     and a bigger, glowing CTA so the flight lands on the strongest beat, not
+     a re-statement of the same copy already used in the topbar. */
+  .sw-copy--final{width:min(46vw,540px);}
+  .sw-copy--final::before{content:"";position:absolute;left:-40px;right:-40px;top:-60px;bottom:-60px;z-index:-1;background:radial-gradient(60% 60% at 30% 40%,color-mix(in srgb,var(--sw-accent) 24%,transparent),transparent 72%);pointer-events:none;}
+  .sw-copy__mark{display:block;height:clamp(48px,7vw,84px);width:auto;margin-top:20px;filter:drop-shadow(0 10px 28px color-mix(in srgb,var(--sw-accent) 45%,transparent));}
+  .sw-copy--final .sw-copy__body{margin-top:20px;font-size:clamp(1.05rem,1.4vw,1.2rem);}
+  .sw-copy--final .sw-copy__cta{margin-top:36px;}
+  .sw-copy--final .sw-btn--primary{padding:18px 38px;font-size:1.05rem;background:linear-gradient(135deg,var(--sw-accent),color-mix(in srgb,var(--sw-accent) 55%,#000));box-shadow:0 16px 36px color-mix(in srgb,var(--sw-accent) 45%,transparent),0 2px 8px rgba(0,0,0,.25);}
+  .sw-copy--final .sw-btn--primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 22px 46px color-mix(in srgb,var(--sw-accent) 55%,transparent),0 4px 12px rgba(0,0,0,.3);}
+  @media (max-width:860px){ .sw-copy--final{width:auto;} .sw-copy--final::before{left:-10vw;right:-10vw;} }
   .sw-route{position:fixed;right:clamp(14px,2.4vw,30px);top:50%;z-index:40;transform:translateY(-50%);display:flex;flex-direction:column;gap:22px;padding:18px 10px;}
   .sw-route::before{content:"";position:absolute;left:50%;top:22px;bottom:22px;width:2px;transform:translateX(-50%);background:var(--sw-accent);opacity:.28;}
   .sw-route__dot{position:relative;border:0;background:transparent;cursor:pointer;width:14px;height:14px;display:grid;place-items:center;}
