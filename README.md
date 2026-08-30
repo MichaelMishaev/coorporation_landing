@@ -29,7 +29,6 @@ built against that contract, not against a running backend yet.
   reasonable v1 cut, not a silent scope drop.
 - §5.5 (optional "why join us" benefit grid) is omitted — conditional on
   the campaign supplying real copy, per spec.
-- Team-grid name/role legend — the photo is real; the caption data isn't.
 - Favicon set, OG image crop to exact 1200×630 — see spec §8.
 - `/privacy` and `/accessibility` are placeholder stubs, not real legal
   content.

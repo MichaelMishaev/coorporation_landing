@@ -85,5 +85,6 @@ single-locale (Hebrew) app.
 
 See the README for the full list — notably: mobile nav is a scrollable link
 row (not the spec's gesture sheet), `/privacy` and `/accessibility` are
-placeholder stubs, and team-grid captions/exact OG-image crop are unfinished.
+placeholder stubs, and the exact OG-image crop is unfinished. (Team-grid
+name/role captions shipped — see `Lineup.tsx` — this is no longer a gap.)
 Don't "fix" these without checking whether they're an intentional cut first.

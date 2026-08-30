@@ -39,7 +39,10 @@ export function Lineup() {
             <div key={member.name} className={styles.card}>
               <Image
                 src={member.photo}
-                alt={member.name}
+                // Decorative relative to the adjacent visible caption below,
+                // which already names this person — a non-empty alt here
+                // would make screen readers announce the name twice.
+                alt=""
                 width={320}
                 height={368}
                 className={styles.photo}

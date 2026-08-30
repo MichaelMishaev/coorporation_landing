@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-26
 **Status:** Design spec, pending review → implementation plan
-**Lane:** STANDARD — a static, read-only Hebrew/RTL marketing surface in the greenfield `public-landing/` app. It performs no data writes of its own and holds no credentials. It **depends on** the CRITICAL-lane backend already specified in `docs/features/leadMachine/2026-08-26-supporter-self-signup-design.md`; that document's lane governs the signup path, this one governs only the marketing surface in front of it.
+**Lane:** STANDARD — a static, read-only Hebrew/RTL marketing surface in the greenfield `public-landing/` app. It performs no data writes of its own and holds no credentials. It **depends on** the CRITICAL-lane backend already specified in `docs/supporter-self-signup-design.md`; that document's lane governs the signup path, this one governs only the marketing surface in front of it.
 
 **Scope boundary:** this document specifies the public app's root page (`/`), its shared layout/nav/footer, its design tokens, and how it hands off to `/join`. It does **not** re-specify the signup form, its data model, or its abuse controls — those are locked in the sibling spec and are not relitigated here.
 
@@ -214,11 +214,19 @@ Copy below is either lifted from the live site (marked **[live]**) or written as
 ### 5.4 הנבחרת — the lineup
 
 - **Purpose:** the credibility beat. Faces do more than any paragraph here.
+- **Current implementation (supersedes both the original per-member grid plan below AND the composite-image revision that superseded it):** the campaign supplied individually cropped photos plus a name/role list for all 11 candidates. `Lineup.tsx` renders them as a CSS grid — one card per person, own photo, name + optional role caption beneath. `amchaisrael-team-two-rows.png` (the single composite asset) is no longer used and was removed from `public/`.
+- **Tokens:** `--canvas-alt` ground to alternate off §5.3, matches the multi-row grid-band padding this section always assumed before the composite detour.
+- History below (original per-card plan, then the composite-only detour when photos weren't yet individually available) kept for context on why the design moved twice — not the current state.
+
+<details>
+<summary>Superseded history</summary>
+
 - **Asset reality check (supersedes the original ClassPass/LottieFiles per-member grid plan):** the live site does not have individually cropped member portraits. It has one asset — `amchaisrael-team-two-rows.png` (1080×703, retouched cutouts of 11 people, transparent background, front row overlapping back row) — the exact image already downloaded into `docs/features/leadMachine/reference/assets/`. This is a *composite*, not a grid source. The ClassPass/LottieFiles reference informed the original per-card plan; the actual asset overrides it.
 - **Revised layout:** render the composite as one full-bleed image, not a CSS grid. Max-width matches the 1200px content column, centered, `object-fit: contain` so no figure is cropped. No card chrome, no hairline, no radius — the image's own transparent cutout edge is the boundary, exactly as the live site uses it.
 - **Names/roles:** the composite carries no name/role data (`alt="הנבחרת שלנו"` only — no per-person alt). If the campaign supplies an ordered name/role list matching left-to-right, back-then-front position in the image, render it as a Caption-type legend row beneath the image. **Ship without the legend if that list doesn't arrive** — the photo alone still carries the credibility beat; do not invent names or guess positions from appearance.
-- **Tokens:** `--canvas-alt` ground to alternate off §5.3, 96px block padding (single image, not a multi-row grid, so §5.3's 128px grid-band padding is oversized here).
 - **No longer a blocking dependency.** The original "cut the section if photos are missing" rule is moot — the photo exists and is already in the repo.
+
+</details>
 
 ### 5.5 למה להצטרף — optional benefit grid
 
@@ -273,7 +281,7 @@ Copy below is either lifted from the live site (marked **[live]**) or written as
 - No shared analytics property, tag manager container, or error-reporting DSN that names or resolves to the management host.
 - No mention of the internal app in copy, error states, `robots.txt`, sitemap, or HTML comments.
 
-**Resolved: same-origin proxy.** The gap above is fixed. The sibling spec now routes every browser-facing call through the public app's own server (`/api/proxy/*`), which relays server-to-server to the management app's `/api/public/*` with a shared-secret header — the management app's origin is never visible to the browser, devtools, or DNS/CT logs from this page. See `docs/features/leadMachine/2026-08-26-supporter-self-signup-design.md` §"Same-origin proxy" for the full mechanism, including how it preserves per-IP rate limiting across the extra hop (`X-Original-Client-IP`, trusted only with a valid secret).
+**Resolved: same-origin proxy.** The gap above is fixed. The sibling spec now routes every browser-facing call through the public app's own server (`/api/proxy/*`), which relays server-to-server to the management app's `/api/public/*` with a shared-secret header — the management app's origin is never visible to the browser, devtools, or DNS/CT logs from this page. See `docs/supporter-self-signup-design.md` §"Same-origin proxy" for the full mechanism, including how it preserves per-IP rate limiting across the extra hop (`X-Original-Client-IP`, trusted only with a valid secret).
 
 ## 8. Assets
 
@@ -283,15 +291,13 @@ Copy below is either lifted from the live site (marked **[live]**) or written as
 |---|---|
 | `amchaisrael-logo-mark.svg` | Nav, §5.7 signature, footer. **Correction from an earlier draft of this spec:** this is a compact horizontal wordmark (viewBox 257×50, ≈5.1:1), not a square icon — do not render it in a 1:1 box. Gradient `#3685E3` → `#8F36BF`, preserved as-is. Render at a fixed height (28px nav/signature, 24px footer) with `width: auto`, never a forced square. |
 | `amchaisrael-logo-lockup.svg` | §5.1 hero only, max-width 420px, viewBox 945.8×227.5 (≈4.16:1) — includes the `בראשות עופר וינטר` sub-lockup. Also not square; keep `height: auto` on the rendered element. |
-| `amchaisrael-team-two-rows.png` | §5.4, full-bleed composite, 1080×703 source. **Real asset — pulled from the live site, not a placeholder.** |
+| ~~`amchaisrael-team-two-rows.png`~~ | **Superseded, removed from `public/`.** §5.4 now renders 11 individually cropped candidate photos (`public/team-*.jpg`) plus a name/role list, not this composite. |
 | `amchaisrael-ofer-winter-signature.png` | §5.2 attribution, 2048×1152 source (scales down cleanly). |
 | `amchaisrael-og-share-image.jpg` | Candidate source for the OG/share image below — 1200×675, 25px short of the standard 1200×630, needs a light crop, not a redesign. |
 
-All five are pulled directly from the live site's own production build (`amchaisrael.co.il`), not recreated or approximated. All are served from the public app's own `/public` directory, none hotlinked (§7). Each needs an accessible name, and where decorative (footer, §5.7 signature mark), `aria-hidden` with the name carried by adjacent text.
+Four of the original five are pulled directly from the live site's own production build (`amchaisrael.co.il`), not recreated or approximated; the fifth (the composite) was superseded by campaign-supplied per-candidate photos. All are served from the public app's own `/public` directory, none hotlinked (§7). Each needs an accessible name, and where decorative (footer, §5.7 signature mark), `aria-hidden` with the name carried by adjacent text.
 
-**Still needed:**
-
-- **Per-member name/role list for §5.4's optional legend.** The photo itself is unblocked; only the caption data is outstanding, and the section ships correctly without it.
+**Still needed:** nothing outstanding for §5.4 — the per-member name/role list arrived and is implemented (`Lineup.tsx`).
 - **Open Graph / social share image**, needed before any link is shared to WhatsApp or Facebook (the movement's primary distribution channel per the live site's own footer). `amchaisrael-og-share-image.jpg` is a strong starting candidate — same brand, same photography — but confirm with the campaign whether reusing their existing share image as-is is acceptable or whether this page wants its own crop/message before treating this item as closed.
 - **Favicon set** derived from the logo mark — `amchaisrael.co.il`'s own `favicon-512.png` exists on the live site and was not pulled in this pass; a one-line addition if wanted.
 

@@ -27,8 +27,10 @@ understand what it's building toward.
 `/join/[code]`, and the four `/api/proxy/*` passthrough routes. Live at
 `https://coorporation-landing-production.up.railway.app`. See this repo's own
 `README.md` for what was intentionally simplified in v1 (mobile nav, the
-optional benefit-grid section, team-member name/role captions, favicon/OG
-crop, `/privacy` and `/accessibility` placeholder content).
+optional benefit-grid section, favicon/OG crop, `/privacy` and
+`/accessibility` placeholder content). Team-member name/role captions shipped
+(the lineup section now renders 11 named candidates individually, not the
+original single composite photo) — no longer part of this list.
 
 **Not yet built** (the `corporations` repo — this app calls it, but it doesn't
 exist yet, so nothing here is end-to-end functional): the `SupportLink`
