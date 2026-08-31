@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import styles from "./SignupForm.module.css";
 import { CITIES } from "@/lib/cities";
 
@@ -90,6 +91,14 @@ export function SignupForm() {
   if (step === "done") {
     return (
       <div className={`${styles.wrap} ${styles.thankYou}`}>
+        <Image
+          src="/logo-mark.svg"
+          alt="עמך ישראל"
+          width={144}
+          height={28}
+          className={styles.mark}
+          priority
+        />
         <h1 className="text-heading">תודה שהצטרפת כתומכ/ת!</h1>
         <p className="text-body">יחד נוכל להשפיע.</p>
       </div>
@@ -98,6 +107,14 @@ export function SignupForm() {
 
   return (
     <form className={styles.wrap} onSubmit={handleSubmit}>
+      <Image
+        src="/logo-mark.svg"
+        alt="עמך ישראל"
+        width={144}
+        height={28}
+        className={styles.mark}
+        priority
+      />
       <h1 className="text-heading">מצטרפ/ת כתומכ/ת</h1>
 
       <div className={styles.field}>

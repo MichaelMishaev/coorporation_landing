@@ -7,6 +7,13 @@
   gap: var(--space-4);
 }
 
+.mark {
+  height: 32px;
+  width: auto;
+  align-self: center;
+  margin-bottom: var(--space-2);
+}
+
 .field {
   display: flex;
   flex-direction: column;
