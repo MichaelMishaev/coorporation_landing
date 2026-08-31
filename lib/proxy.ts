@@ -1,7 +1,7 @@
 /**
  * Same-origin proxy to the management app's /api/public/* routes.
- * See docs/features/leadMachine/2026-08-26-supporter-self-signup-design.md
- * ("Same-origin proxy") in the corporations repo for the full contract.
+ * See docs/features/supporter-self-signup/spec.md ("Same-origin proxy")
+ * for the full contract.
  *
  * This file has no business logic — it forwards the request and the real
  * client IP, nothing else. Validation, dedup, and RBAC all live in the
