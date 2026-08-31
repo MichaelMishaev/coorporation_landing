@@ -11,11 +11,4 @@ describe("SignupForm input length limits", () => {
     );
   });
 
-  it("caps the phone input at 30 characters, matching the server schema", () => {
-    renderForm();
-    expect(screen.getByLabelText<HTMLInputElement>(/טלפון נייד/)).toHaveAttribute(
-      "maxLength",
-      "30"
-    );
-  });
 });

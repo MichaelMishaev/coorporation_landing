@@ -2,11 +2,16 @@ import { submitSignup, type SubmitSignupInput, type SubmitSignupResult } from "@
 import { prisma } from "@/lib/prisma";
 
 const MAX_NAME_LENGTH = 200;
-const MAX_PHONE_LENGTH = 30;
 const MAX_CITY_LENGTH = 100;
 const MAX_BODY_BYTES = 4096;
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const IPV4_PATTERN = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+// Israeli mobile numbers: "05" + 8 more digits, 10 digits total. Matches
+// the client's PHONE_PATTERN in SignupForm.tsx — the client only ever
+// sends raw digits (no dashes), so this is the same check applied
+// server-side, since a request bypassing the UI must not be trusted to
+// have sent a valid shape.
+const PHONE_PATTERN = /^05\d{8}$/;
 
 function jsonError(status: number): Response {
   return Response.json({ status: "error" }, { status });
@@ -87,7 +92,7 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const trimmedPhone = phone.trim();
-  if (!trimmedPhone || trimmedPhone.length > MAX_PHONE_LENGTH) {
+  if (!PHONE_PATTERN.test(trimmedPhone)) {
     return jsonError(400);
   }
 

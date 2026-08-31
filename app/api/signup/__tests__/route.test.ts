@@ -56,6 +56,18 @@ describe("POST /api/signup", () => {
     expect(response.status).toBe(400);
   });
 
+  it("returns 400 for a phone number that isn't a valid Israeli mobile shape", async () => {
+    const response = await POST(
+      makeRequest({
+        fullName: "ישראל ישראלי",
+        phone: "0212345", // landline-shaped, not a 10-digit "05" mobile number
+        cityName: null,
+        clientSubmissionId: crypto.randomUUID(),
+      })
+    );
+    expect(response.status).toBe(400);
+  });
+
   it("returns 409 with no leaked data when clientSubmissionId is reused with a different payload", async () => {
     const id = crypto.randomUUID();
     await POST(
