@@ -7,22 +7,6 @@ type City = { id: string; name: string };
 
 type Step = "loading" | "inactive" | "form" | "submitting" | "done";
 
-/**
- * Response contract assumed from the not-yet-implemented management-app
- * backend, per docs/features/leadMachine/2026-08-26-supporter-self-signup-design.md.
- * Update this type the moment that backend lands if the real shape differs.
- */
-type SupportSignupResponse = {
-  id: string;
-  declarationToken: string;
-};
-
-const INTEREST_OPTIONS: { value: "yes" | "maybe" | "supporter_only"; label: string }[] = [
-  { value: "yes", label: "כן, אשמח להתנדב" },
-  { value: "maybe", label: "אולי, אפשר לחזור אליי" },
-  { value: "supporter_only", label: "כרגע רק תומך/ת" },
-];
-
 export function SignupForm({ linkCode }: { linkCode: string }) {
   const [step, setStep] = useState<Step>("loading");
   const [cities, setCities] = useState<City[]>([]);
@@ -31,8 +15,6 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
   const [cityId, setCityId] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [declaration, setDeclaration] = useState<SupportSignupResponse | null>(null);
-  const [interestAnswered, setInterestAnswered] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -77,7 +59,7 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
         body: JSON.stringify({
           fullName,
           phone,
-          cityId,
+          ...(cityId ? { cityId } : {}),
           linkCode,
           clientSubmissionId: crypto.randomUUID(),
           honeypot,
@@ -90,32 +72,10 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
         return;
       }
 
-      const data: SupportSignupResponse = await response.json();
-      setDeclaration(data);
       setStep("done");
     } catch {
       setError("אירעה שגיאה. נסו שוב בעוד רגע.");
       setStep("form");
-    }
-  }
-
-  async function handleInterest(interest: "yes" | "maybe" | "supporter_only") {
-    if (!declaration) return;
-    setInterestAnswered(true); // thank-you stays visible regardless — optional action
-
-    try {
-      await fetch(`/api/proxy/support-signup/${declaration.id}/interest`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          interest,
-          declarationToken: declaration.declarationToken,
-        }),
-      });
-    } catch {
-      // Interest is a secondary action — the support declaration already
-      // succeeded. Failing quietly here matches the sibling spec's rule
-      // that optional automation never invalidates a completed signup.
     }
   }
 
@@ -140,26 +100,6 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
       <div className={`${styles.wrap} ${styles.thankYou}`}>
         <h1 className="text-heading">תודה שהצטרפת כתומכ/ת!</h1>
         <p className="text-body">יחד נוכל להשפיע.</p>
-
-        {interestAnswered ? (
-          <p className="text-body">תודה על התשובה!</p>
-        ) : (
-          <div className={styles.field}>
-            <p className="text-label">רוצה לקחת חלק פעיל בקמפיין?</p>
-            <div className={styles.interestOptions}>
-              {INTEREST_OPTIONS.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  className={styles.interestButton}
-                  onClick={() => handleInterest(option.value)}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     );
   }
@@ -199,18 +139,15 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
 
       <div className={styles.field}>
         <label className="text-label" htmlFor="city">
-          עיר
+          עיר (לא חובה)
         </label>
         <select
           id="city"
           className={styles.select}
-          required
           value={cityId}
           onChange={(event) => setCityId(event.target.value)}
         >
-          <option value="" disabled>
-            בחר/י עיר
-          </option>
+          <option value="">ללא ציון עיר</option>
           {cities.map((city) => (
             <option key={city.id} value={city.id}>
               {city.name}
