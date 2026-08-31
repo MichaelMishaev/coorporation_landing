@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./SignupForm.module.css";
 
 type City = { id: string; name: string };
@@ -15,6 +15,15 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
   const [cityId, setCityId] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [submissionId, setSubmissionId] = useState(() => crypto.randomUUID());
+  const ambiguousFailurePendingRef = useRef(false);
+
+  function invalidateSubmissionIdIfNeeded() {
+    if (ambiguousFailurePendingRef.current) {
+      ambiguousFailurePendingRef.current = false;
+      setSubmissionId(crypto.randomUUID());
+    }
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -68,12 +77,14 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
           phone,
           ...(cityId ? { cityId } : {}),
           linkCode,
-          clientSubmissionId: crypto.randomUUID(),
+          clientSubmissionId: submissionId,
           honeypot,
         }),
       });
 
       if (!response.ok) {
+        ambiguousFailurePendingRef.current = false;
+        setSubmissionId(crypto.randomUUID());
         setError("אירעה שגיאה. נסו שוב בעוד רגע.");
         setStep("form");
         return;
@@ -81,6 +92,7 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
 
       setStep("done");
     } catch {
+      ambiguousFailurePendingRef.current = true;
       setError("אירעה שגיאה. נסו שוב בעוד רגע.");
       setStep("form");
     }
@@ -126,7 +138,10 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
           required
           maxLength={200}
           value={fullName}
-          onChange={(event) => setFullName(event.target.value)}
+          onChange={(event) => {
+            invalidateSubmissionIdIfNeeded();
+            setFullName(event.target.value);
+          }}
         />
       </div>
 
@@ -142,7 +157,10 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
           required
           maxLength={30}
           value={phone}
-          onChange={(event) => setPhone(event.target.value)}
+          onChange={(event) => {
+            invalidateSubmissionIdIfNeeded();
+            setPhone(event.target.value);
+          }}
         />
       </div>
 
@@ -154,7 +172,10 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
           id="city"
           className={styles.select}
           value={cityId}
-          onChange={(event) => setCityId(event.target.value)}
+          onChange={(event) => {
+            invalidateSubmissionIdIfNeeded();
+            setCityId(event.target.value);
+          }}
         >
           <option value="">ללא ציון עיר</option>
           {cities.map((city) => (
