@@ -1,18 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styles from "./SignupForm.module.css";
+import { CITIES } from "@/lib/cities";
 
-type City = { id: string; name: string };
+type Step = "form" | "submitting" | "done";
 
-type Step = "loading" | "inactive" | "form" | "submitting" | "done";
-
-export function SignupForm({ linkCode }: { linkCode: string }) {
-  const [step, setStep] = useState<Step>("loading");
-  const [cities, setCities] = useState<City[]>([]);
+export function SignupForm() {
+  const [step, setStep] = useState<Step>("form");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
-  const [cityId, setCityId] = useState("");
+  const [cityName, setCityName] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submissionId, setSubmissionId] = useState(() => crypto.randomUUID());
@@ -26,37 +24,6 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
     }
   }
 
-  useEffect(() => {
-    let cancelled = false;
-
-    async function checkLinkAndLoadCities() {
-      try {
-        const [linkRes, citiesRes] = await Promise.all([
-          fetch(`/api/proxy/support-links/${linkCode}`),
-          fetch("/api/proxy/cities"),
-        ]);
-
-        if (cancelled) return;
-
-        if (!linkRes.ok) {
-          setStep("inactive");
-          return;
-        }
-
-        const citiesData = citiesRes.ok ? await citiesRes.json() : { cities: [] };
-        setCities(citiesData.cities ?? []);
-        setStep("form");
-      } catch {
-        if (!cancelled) setStep("inactive");
-      }
-    }
-
-    checkLinkAndLoadCities();
-    return () => {
-      cancelled = true;
-    };
-  }, [linkCode]);
-
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setError(null);
@@ -67,14 +34,10 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
       return;
     }
 
-    const payloadKey = JSON.stringify({ trimmedName, phone, cityId, linkCode });
+    const payloadKey = JSON.stringify({ trimmedName, phone, cityName });
 
     let idToUse = submissionId;
     if (ambiguousFailurePendingRef.current && payloadKey !== lastAttemptedPayloadRef.current) {
-      // Payload differs from what was sent under the current id — likely
-      // edited mid-flight, before invalidateSubmissionIdIfNeeded() in
-      // onChange could catch it. Mint a fresh id for THIS attempt rather
-      // than reusing.
       idToUse = crypto.randomUUID();
     }
     ambiguousFailurePendingRef.current = false;
@@ -86,16 +49,15 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
     setStep("submitting");
 
     try {
-      const response = await fetch("/api/proxy/support-signup", {
+      const response = await fetch("/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           fullName: trimmedName,
           phone,
-          ...(cityId ? { cityId } : {}),
-          linkCode,
+          ...(cityName ? { cityName } : {}),
           clientSubmissionId: idToUse,
-          honeypot,
+          website: honeypot,
         }),
       });
 
@@ -115,22 +77,6 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
       setError("אירעה שגיאה. נסו שוב בעוד רגע.");
       setStep("form");
     }
-  }
-
-  if (step === "loading") {
-    return (
-      <div className={styles.wrap}>
-        <p className="text-body">טוען...</p>
-      </div>
-    );
-  }
-
-  if (step === "inactive") {
-    return (
-      <div className={styles.wrap}>
-        <p className={`text-body ${styles.error}`}>הקישור אינו פעיל</p>
-      </div>
-    );
   }
 
   if (step === "done") {
@@ -190,16 +136,16 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
         <select
           id="city"
           className={styles.select}
-          value={cityId}
+          value={cityName}
           onChange={(event) => {
             invalidateSubmissionIdIfNeeded();
-            setCityId(event.target.value);
+            setCityName(event.target.value);
           }}
         >
           <option value="">ללא ציון עיר</option>
-          {cities.map((city) => (
-            <option key={city.id} value={city.id}>
-              {city.name}
+          {CITIES.map((city) => (
+            <option key={city} value={city}>
+              {city}
             </option>
           ))}
         </select>
