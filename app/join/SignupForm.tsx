@@ -50,6 +50,13 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setError(null);
+
+    const trimmedName = fullName.trim();
+    if (!trimmedName) {
+      setError("אנא הזן שם מלא");
+      return;
+    }
+
     setStep("submitting");
 
     try {
@@ -57,7 +64,7 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fullName,
+          fullName: trimmedName,
           phone,
           ...(cityId ? { cityId } : {}),
           linkCode,
