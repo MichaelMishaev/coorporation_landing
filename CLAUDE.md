@@ -4,6 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 @AGENTS.md
 
+> **Pending architecture change (2026-08-31):** everything below describes
+> the architecture as **currently deployed** (proxy to `corporations`, no
+> DB credentials here). A permanent decision has been made to replace it —
+> this app becomes standalone with its own database, no runtime dependency
+> on `corporations`. **Designed, not yet implemented.** Read
+> `docs/features/standalone-signup/spec.md` before treating anything below
+> as a forward-looking constraint (in particular: "holds no database
+> credentials" is about to become false by design, not an invariant to
+> protect). Once implemented, this file needs a real rewrite, not just this
+> notice.
+
 ## What this app is
 
 Public-facing Hebrew/RTL Next.js app for עמך ישראל: the movement's landing
@@ -71,7 +82,7 @@ recruiter link.
 `app/components/sections/*` inside `RevealSection` scroll-reveal wrappers —
 only the first three below-the-fold sections (mission band, who-we-are,
 lineup) get the entrance animation; hero and footer stay static. Section
-order and scope follow `docs/landing-page-design-spec.md` §5; do not reorder
+order and scope follow `docs/features/landing-page/spec.md` §5; do not reorder
 without checking that spec (some sections, like the §5.5 benefit grid, are
 deliberately omitted pending real campaign copy).
 

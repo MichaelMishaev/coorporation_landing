@@ -4,6 +4,25 @@
 **Status:** Approved design, pending implementation plan
 **Lane:** CRITICAL — new unauthenticated write path into the `Voter` table, plus attribution/RBAC-adjacent logic (CLAUDE.md rule 2.1). RED contract tests + fresh-context adversarial review required before landing, even though the feature itself is small.
 
+**Errata (2026-08-31):** the volunteer-interest step described throughout this
+document (decision 6 below, the `.../interest` proxy route, the
+"Volunteer-interest step" data-model section, `declarationToken`, and the
+matching testing contract) was **fully removed** after this spec was
+approved — no longer built, no longer planned. Every mention of it below is
+kept as historical record of a decision that was later reversed, marked
+inline where it appears, not current behavior. See
+`docs/features/join-form/spec.md` scenario 5.
+
+**Superseded (2026-08-31):** this document's entire architecture — the
+same-origin proxy to `corporations`' `/api/public/*`, `SupportLink` codes,
+attribution to `corporations`' `User` records, this app holding no DB
+credentials of its own — is **replaced** by a permanent decision to make
+`coorporationLanding` standalone (its own database, no runtime dependency
+on `corporations`). See `docs/features/standalone-signup/spec.md` for the
+new architecture and the reasoning. This document is kept in full as
+historical record of the original design, not as current or planned
+behavior.
+
 ## Origin and scope cut
 
 A full PRD exists at `docs/features/leadMachine/reference/Supporter_Acquisition_Module_PRD.md`. It is written for a multi-tenant SaaS and is far heavier than what this platform needs or than this codebase's architecture supports. This spec deliberately implements a small subset, decided in conversation with the product owner:
@@ -13,7 +32,7 @@ A full PRD exists at `docs/features/leadMachine/reference/Supporter_Acquisition_
 3. Any user with role `ACTIVIST`, `ACTIVIST_COORDINATOR`, `CITY_COORDINATOR`, or `AREA_MANAGER` can generate **one personal link** (`SUPERADMIN` excluded — created via seed only, not meant to recruit publicly).
 4. **Ownership always follows the link**, even if the supporter's chosen city doesn't match the link owner's own scope. There is no assignment-conflict queue and no geographic-recommendation engine.
 5. **One generic link**, owned by a fixed "Campaign HQ" `User` account, for non-personal sharing (ads, general posts).
-6. After the core submission, the form asks a yes/maybe/no volunteer-interest question. Yes/maybe creates a `Task`/`TaskAssignment` (reusing the existing broadcast model) directed at the link owner.
+6. ~~After the core submission, the form asks a yes/maybe/no volunteer-interest question. Yes/maybe creates a `Task`/`TaskAssignment` (reusing the existing broadcast model) directed at the link owner.~~ **Removed 2026-08-31** — see errata above.
 7. **The public landing/signup surface is a separate, lightweight Next.js app on its own domain** — the election-management app stays fully private/internal on its own domain and is never itself reachable from the public internet's browser traffic. The public app calls the management app's `/api/public/*` routes over HTTPS; it never talks to Postgres directly. See "Deployment topology."
 
 Explicitly dropped from the source PRD: `campaign_id`/tenant model (this app is single-tenant, scoped by `city_id`/area only), a second supporter database, the assignment/conflict-resolution queue, per-channel consent granularity, WhatsApp API automation, phone OTP verification, supporter-to-supporter referral links, activist-candidate status machine with SLAs. Any of these can become their own follow-up spec once this MVP is live.
@@ -40,7 +59,7 @@ Confirmed by reading the code, not assumed:
 - The **in-flight ACTIVIST Excel-import path** (`app/app/actions/voters.ts`, uncommitted as of 2026-08-09 per `docs/superpowers/specs/2026-08-09-voter-import-durable-job-design.md`) already establishes the exact precedent this feature needs: for `ACTIVIST`, canonical city resolution is bypassed entirely and the caller's own scope (`viewer.cityId`) is the sole authority, with the free-text city stored but never validated against it. This spec generalizes that same bypass to all four eligible roles for the public path (see "City handling").
 - `Invitation` is the existing pattern for a public unique token/code with an owner and expiry — the model for `SupportLink` below.
 - `OfflineMutationReceipt` already solves "durable, replay-safe idempotency for a CREATE_VOTER-shaped mutation" with an HMAC digest, an actor FK, and a 30-day expiry. This is reused for idempotency instead of inventing a new mechanism.
-- `Task`/`TaskAssignment` is an existing sender→recipients broadcast model (`status`: unread/read/acknowledged/archived). Reused as-is for the volunteer-interest follow-up notification — no new task/SLA model.
+- ~~`Task`/`TaskAssignment` is an existing sender→recipients broadcast model (`status`: unread/read/acknowledged/archived). Reused as-is for the volunteer-interest follow-up notification — no new task/SLA model.~~ **Removed 2026-08-31** — the volunteer-interest step that would have used this was cut; see errata above.
 - `lib/ratelimit.ts` is Redis-backed and already used elsewhere, but **fails open** on Redis errors ("availability over strict security" — acceptable when every existing caller is already authenticated). This route needs different behavior (see "Abuse controls").
 
 ## Architecture
@@ -70,12 +89,12 @@ Public browser     Public app: browser-facing pages   Public app: server-side pr
      |                          |                                  |                              |-- synthesize UserContext for owner                |
      |                          |                                  |                              |-- createVoterForContext(input, ownerContext) ---->|
      |                          |                                  |                              |     (OfflineMutationReceipt idempotency check)   |
-     |                          |<---------------------------------|<-- { declarationToken } -----|                              |
-     |                          |                                  |                              |                              |
-     |-- volunteer answer ----->|-- (same server) POST /api/proxy/support-signup/.../interest ---->|-- POST .../interest, X-Public-Proxy-Secret ------>|
-     |                          |                                  |                              |-- verify token, create Task+TaskAssignment ----->|
      |<-- thank-you ------------|<---------------------------------|<-----------------------------|                              |
 ```
+
+(The volunteer-answer / `.../interest` / `declarationToken` leg shown in an
+earlier version of this diagram was removed 2026-08-31 — see errata above.
+The flow now ends at the thank-you screen immediately after signup.)
 
 ### Same-origin proxy (browser never calls the management app)
 
@@ -83,7 +102,7 @@ A design review of the companion landing-page spec (`docs/features/leadMachine/2
 
 **Fix: every browser-facing request stays same-origin against the public app. The public app's own server proxies to the management app.**
 
-- New routes on the public app's own server: `POST /api/proxy/support-signup`, `POST /api/proxy/support-signup/{id}/interest`, `GET /api/proxy/support-links/{code}` — thin pass-throughs with no business logic. The browser only ever talks to these.
+- New routes on the public app's own server: `POST /api/proxy/support-signup`, `GET /api/proxy/support-links/{code}` — thin pass-throughs with no business logic. The browser only ever talks to these. (A third route, `POST /api/proxy/support-signup/{id}/interest`, existed for the volunteer-interest step; removed 2026-08-31 along with that step — see errata above.)
 - Each proxy call to the management app carries a **shared secret** header (`X-Public-Proxy-Secret`), set as a matching Railway env var on both services. The management app's `/api/public/*` routes reject any request missing or failing this check with a generic 404 — not a 401/403, so the routes' existence isn't confirmed to a prober that omits the header.
 - **Real client IP must survive the hop, or the existing per-(link, IP) rate limiting silently collapses to per-link-only** — every request would otherwise arrive at the management app carrying the public app's own server IP, not the supporter's. The proxy reads the real client IP the same way `lib/ratelimit.ts` already does today (`x-forwarded-for`/`x-real-ip`, set by Railway's edge) and forwards it explicitly as `X-Original-Client-IP`. The management app's rate limiter keys on `X-Original-Client-IP` **only when `X-Public-Proxy-Secret` is valid**; without a valid secret, the request is rejected outright before any IP logic runs, so there's nothing for an unauthenticated caller to spoof.
 - **Residual, accepted risk:** if the shared secret leaks, a caller could both bypass the "generic 404" gate and forge `X-Original-Client-IP` to defeat per-IP limiting. This is the standard exposure of any shared-secret pattern and isn't solved further here — the daily-cap-per-link control (see "Abuse controls") is IP-independent and stays as a backstop regardless.
@@ -149,9 +168,14 @@ This replaces the ad hoc short-lived Redis lock originally proposed — it is du
 
 `voter-actions.ts` currently hardcodes `importSource: 'manual'` on the `CREATE_VOTER` audit entry (`voter-actions.ts:895-906`), and does not record which link a voter came from. This path must record `importSource: 'public_signup'` and the `SupportLink.code` used, so a SuperAdmin can retroactively spot an abusive link (see "Abuse controls").
 
-### Volunteer-interest step
+### Volunteer-interest step — removed 2026-08-31
 
-No new table. On yes/maybe, create one `Task` (`senderUserId` = a fixed system/Campaign-HQ user) + one `TaskAssignment` (`targetUserId` = the link owner, or Campaign HQ itself for the generic link), body referencing the new voter's name/phone. The interest endpoint accepts a short-lived, stateless, server-HMAC-signed `declarationToken` (voter id + expiry, verified without a DB lookup) returned by the create-signup response — no new persisted secret table for this low-severity step.
+~~No new table. On yes/maybe, create one `Task` (`senderUserId` = a fixed system/Campaign-HQ user) + one `TaskAssignment` (`targetUserId` = the link owner, or Campaign HQ itself for the generic link), body referencing the new voter's name/phone. The interest endpoint accepts a short-lived, stateless, server-HMAC-signed `declarationToken` (voter id + expiry, verified without a DB lookup) returned by the create-signup response — no new persisted secret table for this low-severity step.~~
+
+This entire step (the yes/maybe/no question, the `Task`/`TaskAssignment`
+creation, the `declarationToken`, and the `.../interest` route) was fully
+removed after this spec was approved. Kept here as historical record only
+— see errata at the top of this document.
 
 ## Abuse controls
 
@@ -179,7 +203,7 @@ Per CLAUDE.md's CRITICAL lane: Codex-authored RED contract tests before implemen
 - Rate limiter fails closed (rejects) for this route specifically when Redis is unavailable, verified independently of the app-wide fail-open default.
 - `/api/public/*` rejects any request with a missing or invalid `X-Public-Proxy-Secret` with a generic 404 (not 401/403), before any rate-limit or business logic runs.
 - Rate limiting keys on `X-Original-Client-IP`, not the raw connection IP — two different `X-Original-Client-IP` values through the same proxy connection are limited independently; the same `X-Original-Client-IP` value is limited jointly regardless of which proxy instance forwarded it.
-- Volunteer interest "yes"/"maybe" creates exactly one `Task`+`TaskAssignment`, targeted at the correct owner (link owner, or Campaign HQ for the generic link); "supporter only" creates none.
+- ~~Volunteer interest "yes"/"maybe" creates exactly one `Task`+`TaskAssignment`, targeted at the correct owner (link owner, or Campaign HQ for the generic link); "supporter only" creates none.~~ **Removed 2026-08-31** along with the volunteer-interest step — see errata above; no longer a contract to test.
 - Cross-tenant/RBAC negative: the public route cannot be used to read or infer any other user's or voter's existing data (link-code enumeration doesn't leak which internal users exist beyond "this code is valid/invalid").
 
 ## Open items for the implementation plan (not blocking this spec)

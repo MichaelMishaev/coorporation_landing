@@ -1,14 +1,19 @@
 # עמך ישראל — Public Landing + Supporter Signup
 
 Public-facing Hebrew/RTL Next.js app: the movement's landing page and the
-supporter self-signup flow (`/join`, `/join/[code]`). Holds no database
-credentials and no auth — every write proxies server-to-server to the
-management app (a separate private repo/service).
+supporter self-signup flow. **As currently deployed** (below): `/join` +
+`/join/[code]`, no database credentials, every write proxied
+server-to-server to the management app (a separate private repo/service).
 
-Design and architecture specs live in the `corporations` repo:
+**Pending change (2026-08-31):** this app is going standalone — its own
+database, no dependency on the management app — see
+`docs/features/standalone-signup/spec.md`. Designed, not yet implemented;
+the description below is still what's actually running.
 
-- `docs/features/leadMachine/2026-08-26-landing-page-design-spec.md` — tokens, section plan, copy sourcing.
-- `docs/features/leadMachine/2026-08-26-supporter-self-signup-design.md` — API contract, data model, the same-origin proxy this app implements.
+Design/architecture specs are copied into this repo's own `docs/` (source of
+truth lives in the `corporations` repo) — start at `docs/README.md`, which
+indexes each feature's `spec.md` + `expected-result.md` under
+`docs/features/`.
 
 ## Development
 

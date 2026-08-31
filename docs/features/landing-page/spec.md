@@ -2,11 +2,23 @@
 
 **Date:** 2026-08-26
 **Status:** Design spec, pending review → implementation plan
-**Lane:** STANDARD — a static, read-only Hebrew/RTL marketing surface in the greenfield `public-landing/` app. It performs no data writes of its own and holds no credentials. It **depends on** the CRITICAL-lane backend already specified in `docs/supporter-self-signup-design.md`; that document's lane governs the signup path, this one governs only the marketing surface in front of it.
+**Lane:** STANDARD — a static, read-only Hebrew/RTL marketing surface in the greenfield `public-landing/` app. It performs no data writes of its own and holds no credentials. It **depends on** the CRITICAL-lane backend already specified in `docs/features/supporter-self-signup/spec.md`; that document's lane governs the signup path, this one governs only the marketing surface in front of it.
 
 **Scope boundary:** this document specifies the public app's root page (`/`), its shared layout/nav/footer, its design tokens, and how it hands off to `/join`. It does **not** re-specify the signup form, its data model, or its abuse controls — those are locked in the sibling spec and are not relitigated here.
 
 **Screen-lock note:** `public-landing/` is greenfield. It is **not** one of the management app's LOCKED dashboard screens, and no per-screen approval gate applies to designing or building its pages. The one exception is §7, which touches the management app's own nav and therefore does require approval.
+
+**Partially superseded (2026-08-31):** §4 ("Primary CTA routing") describes
+routing to `/join` vs `/join/{code}` based on a generic `SupportLink` code
+read from `NEXT_PUBLIC_GENERIC_JOIN_CODE` — that mechanism is gone under
+the standalone architecture (`docs/features/standalone-signup/spec.md`):
+there's only one `/join`, no code involved. The *decision* "every CTA
+points at `/join`" still holds trivially (there's nowhere else to point);
+the reasoning in §4 about generic-vs-personal codes, and §7's "Resolved:
+same-origin proxy" note, describe the old mechanism and are historical.
+Everything else in this document (tokens, section plan, copy, assets,
+accessibility, the outbound-nav-boundary rule in §7) is unaffected — the
+landing page itself doesn't call any backend.
 
 ---
 
@@ -281,7 +293,7 @@ Copy below is either lifted from the live site (marked **[live]**) or written as
 - No shared analytics property, tag manager container, or error-reporting DSN that names or resolves to the management host.
 - No mention of the internal app in copy, error states, `robots.txt`, sitemap, or HTML comments.
 
-**Resolved: same-origin proxy.** The gap above is fixed. The sibling spec now routes every browser-facing call through the public app's own server (`/api/proxy/*`), which relays server-to-server to the management app's `/api/public/*` with a shared-secret header — the management app's origin is never visible to the browser, devtools, or DNS/CT logs from this page. See `docs/supporter-self-signup-design.md` §"Same-origin proxy" for the full mechanism, including how it preserves per-IP rate limiting across the extra hop (`X-Original-Client-IP`, trusted only with a valid secret).
+**Resolved: same-origin proxy.** The gap above is fixed. The sibling spec now routes every browser-facing call through the public app's own server (`/api/proxy/*`), which relays server-to-server to the management app's `/api/public/*` with a shared-secret header — the management app's origin is never visible to the browser, devtools, or DNS/CT logs from this page. See `docs/features/supporter-self-signup/spec.md` §"Same-origin proxy" for the full mechanism, including how it preserves per-IP rate limiting across the extra hop (`X-Original-Client-IP`, trusted only with a valid secret).
 
 ## 8. Assets
 
