@@ -21,6 +21,7 @@ model SupportSignup {
 }
 
 model SignupRateLimitBucket {
+  id          String   @id @default(uuid())
   ip          String
   windowStart DateTime
   count       Int      @default(0)

@@ -83,7 +83,7 @@ describe("submitSignup", () => {
     );
     const results = await Promise.all(attempts);
     const successCount = results.filter((r) => r.type === "success").length;
-    expect(successCount).toBeLessThanOrEqual(5);
+    expect(successCount).toBe(5);
 
     const rows = await prisma.supportSignup.findMany({ where: { ip } });
     expect(rows).toHaveLength(successCount);

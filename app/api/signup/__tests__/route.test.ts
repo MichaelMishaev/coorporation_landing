@@ -128,6 +128,37 @@ describe("POST /api/signup", () => {
     expect(response.status).toBe(400);
   });
 
+  it("returns 400 when the rightmost X-Forwarded-For entry isn't a plausible IP", async () => {
+    const response = await POST(
+      makeRequest(
+        { fullName: "א", phone: "0500000000", cityName: null, clientSubmissionId: crypto.randomUUID() },
+        { "x-forwarded-for": "not-an-ip" }
+      )
+    );
+    expect(response.status).toBe(400);
+  });
+
+  it("returns 413 for a request body over the size cap", async () => {
+    // Node's undici `Request` doesn't auto-populate a `content-length`
+    // header for a manufactured Request the way Next.js's real HTTP
+    // layer does for actual traffic (verified empirically), so the
+    // header is set explicitly here to exercise the route's check —
+    // this proves the check itself works, not that fetch() always sets
+    // the header (it does, for real requests).
+    const response = await POST(
+      makeRequest(
+        {
+          fullName: "א".repeat(5000),
+          phone: "0500000000",
+          cityName: null,
+          clientSubmissionId: crypto.randomUUID(),
+        },
+        { "x-forwarded-for": "1.2.3.4", "content-length": "5000" }
+      )
+    );
+    expect(response.status).toBe(413);
+  });
+
   it("returns 429 once the rate limit is exceeded, with zero rows written for the rejected request", async () => {
     const ip = "5.5.5.5";
     for (let i = 0; i < 5; i++) {

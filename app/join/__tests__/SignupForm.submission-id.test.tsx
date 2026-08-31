@@ -30,6 +30,28 @@ describe("SignupForm clientSubmissionId lifecycle", () => {
     });
   });
 
+  it("reuses the same id across a retry after a 5xx server error with an unchanged payload", async () => {
+    const user = userEvent.setup();
+    let call = 0;
+    const fetchMock = renderForm(() => {
+      call += 1;
+      if (call === 1) return Promise.resolve(jsonResponse({ status: "error" }, 500));
+      return Promise.resolve(jsonResponse({ status: "success" }));
+    });
+    await user.type(screen.getByLabelText(/שם מלא/), "ישראל ישראלי");
+    await user.type(screen.getByLabelText(/טלפון נייד/), "0501234567");
+
+    await fillAndSubmit(user);
+    await screen.findByText("אירעה שגיאה. נסו שוב בעוד רגע.");
+    await fillAndSubmit(user);
+
+    await vi.waitFor(() => {
+      const first = submittedBody(fetchMock, 0);
+      const second = submittedBody(fetchMock, 1);
+      expect(second.clientSubmissionId).toBe(first.clientSubmissionId);
+    });
+  });
+
   it("mints a fresh id after a definitive (non-ok) response, even on an unmodified resubmit", async () => {
     const user = userEvent.setup();
     let call = 0;

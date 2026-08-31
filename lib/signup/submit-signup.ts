@@ -41,6 +41,27 @@ function currentWindowStart(): Date {
   return now;
 }
 
+/**
+ * Old buckets are never queried again once their window has passed —
+ * spec.md's "SignupRateLimitBucket" section calls periodic cleanup "a
+ * trivial implementation-time addition, not architectural." This is
+ * that addition: cheap, probabilistic, non-blocking. It never delays or
+ * fails the request it happens to run alongside — a failed cleanup is
+ * logged and swallowed, not surfaced to the caller.
+ */
+const CLEANUP_PROBABILITY = 0.01;
+const CLEANUP_RETENTION_WINDOWS = 10;
+
+function cleanupStaleBuckets(prisma: PrismaClient, currentWindow: Date): void {
+  if (Math.random() >= CLEANUP_PROBABILITY) return;
+  const cutoff = new Date(currentWindow.getTime() - CLEANUP_RETENTION_WINDOWS * 60_000);
+  prisma.signupRateLimitBucket
+    .deleteMany({ where: { windowStart: { lt: cutoff } } })
+    .catch((err) => {
+      console.error("signup rate-limit bucket cleanup failed", err);
+    });
+}
+
 async function checkIdempotency(
   prisma: PrismaClient,
   clientSubmissionId: string,
@@ -71,6 +92,7 @@ export async function submitSignup(
     create: { ip: input.ip, windowStart, count: 1 },
     update: { count: { increment: 1 } },
   });
+  cleanupStaleBuckets(prisma, windowStart);
   if (bucket.count > RATE_LIMIT_THRESHOLD) {
     return { type: "rateLimited" };
   }

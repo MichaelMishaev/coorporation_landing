@@ -62,8 +62,16 @@ export function SignupForm() {
       });
 
       if (!response.ok) {
-        ambiguousFailurePendingRef.current = false;
-        setSubmissionId(crypto.randomUUID());
+        if (response.status >= 500) {
+          // Server error — we can't tell whether the write actually
+          // committed before the response was lost, so treat this like
+          // a network failure: keep the same id so a same-payload retry
+          // is a safe replay, not a duplicate.
+          ambiguousFailurePendingRef.current = true;
+        } else {
+          ambiguousFailurePendingRef.current = false;
+          setSubmissionId(crypto.randomUUID());
+        }
         setError("אירעה שגיאה. נסו שוב בעוד רגע.");
         setStep("form");
         return;
