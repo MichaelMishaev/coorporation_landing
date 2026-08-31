@@ -21,7 +21,7 @@ model SupportSignup {
 }
 
 model SignupRateLimitBucket {
-  id          String   @id @default(uuid())
+  id          String   @id @default(dbgenerated("gen_random_uuid()"))
   ip          String
   windowStart DateTime
   count       Int      @default(0)

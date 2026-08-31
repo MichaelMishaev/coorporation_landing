@@ -23,7 +23,12 @@ function isPlausibleClientIp(candidate: string): boolean {
   if (v4Match) {
     return v4Match.slice(1).every((octet) => Number(octet) <= 255);
   }
-  return candidate.length <= 45 && candidate.includes(":") && /^[0-9a-fA-F:]+$/.test(candidate);
+  return (
+    candidate.length <= 45 &&
+    candidate.includes(":") &&
+    /^[0-9a-fA-F:]+$/.test(candidate) &&
+    /[0-9a-fA-F]/.test(candidate.replace(/:/g, ""))
+  );
 }
 
 /**
