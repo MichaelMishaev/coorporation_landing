@@ -124,6 +124,7 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
           className={styles.input}
           type="text"
           required
+          maxLength={200}
           value={fullName}
           onChange={(event) => setFullName(event.target.value)}
         />
@@ -139,6 +140,7 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
           type="tel"
           inputMode="numeric"
           required
+          maxLength={30}
           value={phone}
           onChange={(event) => setPhone(event.target.value)}
         />
