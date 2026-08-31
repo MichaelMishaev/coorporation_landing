@@ -1,7 +1,12 @@
 # Standalone Signup Backend
 
 **Date:** 2026-08-31
-**Status:** Approved design, pending implementation plan
+**Status:** Implemented (docs/superpowers/plans/2026-08-31-standalone-signup-backend.md,
+plus a post-final-review hardening pass) on branch
+`standalone-signup-backend` — code complete, reviewed, and committed.
+Not yet merged into `develop`, not yet deployed to dev or prod. Dev
+Railway service has `DATABASE_URL` and a migration pre-deploy command
+already wired; prod has no dedicated Postgres yet.
 **Supersedes:** `docs/features/supporter-self-signup/spec.md` — that document's
 whole architecture (same-origin proxy to `corporations`' `/api/public/*`,
 `SupportLink` codes, attribution to `corporations`' `User` records) is

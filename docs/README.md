@@ -65,8 +65,11 @@ routes were independently verified unavailable on both its `dev`
 was made to stop depending on that backend permanently, not just to work
 around the current gap. As of this date, the standalone backend
 (new Postgres, new routes, `SignupForm.tsx` wire-contract update) is
-**designed but not yet implemented** — `/join` still runs on the old
-proxy architecture in deployed code.
+**implemented and committed** on branch `standalone-signup-backend`
+(code complete, task-reviewed and whole-branch-reviewed by two
+independent reviewers) — **not yet merged into `develop` and not yet
+live**. `/join` in currently deployed code (both dev and prod) still
+runs on the old proxy architecture until this branch merges and deploys.
 
 **Built and deployed** (this repo, old architecture): the full landing page,
 `/join` + `/join/[code]`, and the four `/api/proxy/*` passthrough routes.
@@ -82,9 +85,11 @@ not the original single composite photo) — no longer part of this list.
 (wire contract + UI), name trim/validation, `maxLength` parity, and the
 `clientSubmissionId` idempotency-key lifecycle — see
 `features/join-form/spec.md` and its `expected-result.md`. These went in
-against the *old* proxy architecture; they still need adapting once the
-standalone backend lands, per `features/standalone-signup/spec.md`
-"Relationship to existing `/join` work."
+against the *old* proxy architecture. These were adapted to the new wire
+contract as part of the standalone backend's implementation (Task 7 of the
+standalone-signup-backend plan) — carried forward unchanged in logic, just
+pointed at the new endpoint and request shape. Not yet live until that
+branch merges and deploys.
 
 **Superseded, not applicable to new work:** the "Not yet built" /
 `NEXT_PUBLIC_GENERIC_JOIN_CODE` / `PUBLIC_PROXY_SECRET` blockers that used

@@ -7,8 +7,13 @@ server-to-server to the management app (a separate private repo/service).
 
 **Pending change (2026-08-31):** this app is going standalone — its own
 database, no dependency on the management app — see
-`docs/features/standalone-signup/spec.md`. Designed, not yet implemented;
-the description below is still what's actually running.
+`docs/features/standalone-signup/spec.md`. **Implemented and committed**
+on branch `standalone-signup-backend` (code complete, reviewed by two
+independent reviewers) — **not yet merged into `develop` and not yet
+deployed**. The description below (proxy architecture, three env vars)
+is still what's actually running in both dev and prod; the Development
+section further down already reflects the new `DATABASE_URL`-based setup
+for anyone working on the `standalone-signup-backend` branch.
 
 Design/architecture specs are copied into this repo's own `docs/` (source of
 truth lives in the `corporations` repo) — start at `docs/README.md`, which
@@ -19,13 +24,19 @@ indexes each feature's `spec.md` + `expected-result.md` under
 
 ```bash
 npm install
-cp .env.example .env.local   # fill in MANAGEMENT_APP_BASE_URL, PUBLIC_PROXY_SECRET, NEXT_PUBLIC_GENERIC_JOIN_CODE
+cp .env.example .env.local   # fill in DATABASE_URL (a Postgres connection string —
+                              # for local dev, the Railway dev Postgres's public TCP
+                              # proxy connection string, or any local Postgres)
+npx prisma migrate dev
 npm run dev
 ```
 
-The signup form will not function until the management app's
-`/api/public/*` routes (spec'd, not yet implemented) exist — this app is
-built against that contract, not against a running backend yet.
+This reflects the standalone backend on branch `standalone-signup-backend`
+(own Postgres, own `/api/signup` route) — see
+`docs/features/standalone-signup/spec.md`. It is implemented and committed
+but not yet merged into `develop` or deployed; the management-app proxy
+setup described above is what's still live in dev/prod until this branch
+merges.
 
 ## What's intentionally not built yet
 

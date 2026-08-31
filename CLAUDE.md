@@ -8,12 +8,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > the architecture as **currently deployed** (proxy to `corporations`, no
 > DB credentials here). A permanent decision has been made to replace it —
 > this app becomes standalone with its own database, no runtime dependency
-> on `corporations`. **Designed, not yet implemented.** Read
-> `docs/features/standalone-signup/spec.md` before treating anything below
-> as a forward-looking constraint (in particular: "holds no database
-> credentials" is about to become false by design, not an invariant to
-> protect). Once implemented, this file needs a real rewrite, not just this
-> notice.
+> on `corporations`. **Implemented and committed on branch
+> `standalone-signup-backend`** (code complete, reviewed by two independent
+> reviewers) — **not yet merged into `develop`, not yet deployed to dev or
+> prod.** Read `docs/features/standalone-signup/spec.md` before treating
+> anything below as a forward-looking constraint (in particular: "holds no
+> database credentials" is no longer true on that branch, though it's still
+> true of what's currently deployed). Once this branch merges, this file
+> needs a real rewrite, not just this notice — that rewrite is out of scope
+> until the merge actually happens.
 
 ## What this app is
 
