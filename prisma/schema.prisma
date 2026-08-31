@@ -5,3 +5,26 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model SupportSignup {
+  id                 String   @id @default(uuid())
+  fullName           String   @db.VarChar(200)
+  phone              String   @db.VarChar(30)
+  cityName           String?  @db.VarChar(100)
+  clientSubmissionId String   @unique
+  payloadDigest      String
+  ip                 String
+  honeypotTripped    Boolean  @default(false)
+  createdAt          DateTime @default(now())
+
+  @@map("support_signups")
+}
+
+model SignupRateLimitBucket {
+  ip          String
+  windowStart DateTime
+  count       Int      @default(0)
+
+  @@unique([ip, windowStart], name: "ip_windowStart")
+  @@map("signup_rate_limit_buckets")
+}
