@@ -20,8 +20,10 @@ function jsonError(status: number): Response {
  * single reverse-proxy hop (Railway's edge, directly in front of this
  * app), the rightmost X-Forwarded-For entry is the one the edge itself
  * appended — a client-supplied value is always prepended before that.
- * Fails closed (returns null) rather than falling back to a shared
- * "unknown" bucket if no trustworthy IP can be determined.
+ * No other header is trusted (in particular, no X-Real-Ip fallback — an
+ * unverified header a client may be able to set directly). Fails closed
+ * (returns null) rather than falling back to a shared "unknown" bucket
+ * if no trustworthy IP can be determined.
  */
 function getClientIp(request: Request): string | null {
   const xff = request.headers.get("x-forwarded-for");
@@ -34,8 +36,6 @@ function getClientIp(request: Request): string | null {
       return parts[parts.length - 1];
     }
   }
-  const xRealIp = request.headers.get("x-real-ip");
-  if (xRealIp) return xRealIp.trim();
   return null;
 }
 

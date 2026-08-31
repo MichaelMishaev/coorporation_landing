@@ -113,6 +113,21 @@ describe("POST /api/signup", () => {
     expect(response.status).toBe(400);
   });
 
+  it("returns 400 when X-Forwarded-For is absent even if X-Real-Ip is present", async () => {
+    const request = new Request("http://localhost/api/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-real-ip": "8.8.8.8" },
+      body: JSON.stringify({
+        fullName: "א",
+        phone: "0500000000",
+        cityName: null,
+        clientSubmissionId: crypto.randomUUID(),
+      }),
+    });
+    const response = await POST(request);
+    expect(response.status).toBe(400);
+  });
+
   it("returns 429 once the rate limit is exceeded, with zero rows written for the rejected request", async () => {
     const ip = "5.5.5.5";
     for (let i = 0; i < 5; i++) {
