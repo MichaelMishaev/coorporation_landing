@@ -67,7 +67,7 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
       return;
     }
 
-    const payloadKey = JSON.stringify({ trimmedName, phone, cityId });
+    const payloadKey = JSON.stringify({ trimmedName, phone, cityId, linkCode });
 
     let idToUse = submissionId;
     if (ambiguousFailurePendingRef.current && payloadKey !== lastAttemptedPayloadRef.current) {
