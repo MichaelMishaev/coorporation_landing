@@ -17,6 +17,7 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
   const [error, setError] = useState<string | null>(null);
   const [submissionId, setSubmissionId] = useState(() => crypto.randomUUID());
   const ambiguousFailurePendingRef = useRef(false);
+  const lastAttemptedPayloadRef = useRef<string | null>(null);
 
   function invalidateSubmissionIdIfNeeded() {
     if (ambiguousFailurePendingRef.current) {
@@ -66,6 +67,22 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
       return;
     }
 
+    const payloadKey = JSON.stringify({ trimmedName, phone, cityId });
+
+    let idToUse = submissionId;
+    if (ambiguousFailurePendingRef.current && payloadKey !== lastAttemptedPayloadRef.current) {
+      // Payload differs from what was sent under the current id — likely
+      // edited mid-flight, before invalidateSubmissionIdIfNeeded() in
+      // onChange could catch it. Mint a fresh id for THIS attempt rather
+      // than reusing.
+      idToUse = crypto.randomUUID();
+    }
+    ambiguousFailurePendingRef.current = false;
+    lastAttemptedPayloadRef.current = payloadKey;
+    if (idToUse !== submissionId) {
+      setSubmissionId(idToUse);
+    }
+
     setStep("submitting");
 
     try {
@@ -77,7 +94,7 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
           phone,
           ...(cityId ? { cityId } : {}),
           linkCode,
-          clientSubmissionId: submissionId,
+          clientSubmissionId: idToUse,
           honeypot,
         }),
       });
@@ -90,6 +107,8 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
         return;
       }
 
+      ambiguousFailurePendingRef.current = false;
+      setSubmissionId(crypto.randomUUID());
       setStep("done");
     } catch {
       ambiguousFailurePendingRef.current = true;

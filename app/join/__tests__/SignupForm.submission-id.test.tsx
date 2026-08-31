@@ -78,4 +78,41 @@ describe("SignupForm clientSubmissionId lifecycle", () => {
       expect(secondBody.clientSubmissionId).not.toBe(firstBody.clientSubmissionId);
     });
   });
+
+  it("mints a fresh id when a field is edited while a request is still pending, before it fails", async () => {
+    const user = userEvent.setup();
+    let call = 0;
+    let rejectFirst: (reason?: unknown) => void = () => {};
+    const fetchMock = await renderFormReady({
+      signup: () => {
+        call += 1;
+        if (call === 1) {
+          return new Promise<Response>((_resolve, reject) => {
+            rejectFirst = reject;
+          });
+        }
+        return Promise.resolve(jsonResponse({ status: "success" }));
+      },
+    });
+    await user.type(screen.getByLabelText(/שם מלא/), "ישראל ישראלי");
+    await user.type(screen.getByLabelText(/טלפון נייד/), "0501234567");
+
+    await fillAndSubmit(user);
+
+    // request is now pending (call === 1, promise not yet settled) — edit
+    // the name field while it's still in flight, before the catch block
+    // has a chance to mark ambiguousFailurePendingRef.
+    await user.type(screen.getByLabelText(/שם מלא/), "י");
+
+    rejectFirst(new Error("network down"));
+    await screen.findByText("אירעה שגיאה. נסו שוב בעוד רגע.");
+
+    await fillAndSubmit(user);
+
+    await vi.waitFor(() => {
+      const first = submittedBody(fetchMock, 0);
+      const second = submittedBody(fetchMock, 1);
+      expect(second.clientSubmissionId).not.toBe(first.clientSubmissionId);
+    });
+  });
 });
