@@ -24,7 +24,7 @@ function getPathname(urlString: string): string {
 export function installFetchMock(overrides: FetchOverrides = {}) {
   const fetchMock = vi.fn((url: string, init?: RequestInit) => {
     const pathname = getPathname(url);
-    if (pathname.startsWith("/api/proxy/support-links/")) {
+    if (/^\/api\/proxy\/support-links\/[^/]+$/.test(pathname)) {
       return (overrides.link ?? (() => Promise.resolve(jsonResponse({ active: true }))))(
         url,
         init
