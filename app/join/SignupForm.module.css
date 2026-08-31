@@ -20,8 +20,7 @@
   gap: var(--space-1);
 }
 
-.input,
-.select {
+.input {
   padding: var(--space-2);
   border-radius: var(--radius-card);
   border: 1px solid var(--border);
@@ -30,8 +29,7 @@
   font-family: inherit;
 }
 
-.input:focus-visible,
-.select:focus-visible {
+.input:focus-visible {
   outline: 2px solid var(--accent-cta);
   outline-offset: 2px;
 }

@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import styles from "./SignupForm.module.css";
+import { CityCombobox } from "./CityCombobox";
 import { CITIES } from "@/lib/cities";
 
 type Step = "form" | "submitting" | "done";
@@ -158,22 +159,15 @@ export function SignupForm() {
         <label className="text-label" htmlFor="city">
           עיר (לא חובה)
         </label>
-        <select
+        <CityCombobox
           id="city"
-          className={styles.select}
+          cities={CITIES}
           value={cityName}
-          onChange={(event) => {
+          onChange={(newValue) => {
             invalidateSubmissionIdIfNeeded();
-            setCityName(event.target.value);
+            setCityName(newValue);
           }}
-        >
-          <option value="">ללא ציון עיר</option>
-          {CITIES.map((city) => (
-            <option key={city} value={city}>
-              {city}
-            </option>
-          ))}
-        </select>
+        />
       </div>
 
       {/* Honeypot — invisible to real users, spec "Abuse controls" */}
