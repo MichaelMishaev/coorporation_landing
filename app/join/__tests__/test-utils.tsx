@@ -13,21 +13,30 @@ export function jsonResponse(body: unknown, status = 200): Response {
 
 type FetchOverrides = Partial<Record<"link" | "cities" | "signup", FetchImpl>>;
 
+function getPathname(urlString: string): string {
+  try {
+    return new URL(urlString, "http://localhost").pathname;
+  } catch {
+    return urlString;
+  }
+}
+
 export function installFetchMock(overrides: FetchOverrides = {}) {
   const fetchMock = vi.fn((url: string, init?: RequestInit) => {
-    if (url.includes("/api/proxy/support-links/")) {
+    const pathname = getPathname(url);
+    if (pathname.startsWith("/api/proxy/support-links/")) {
       return (overrides.link ?? (() => Promise.resolve(jsonResponse({ active: true }))))(
         url,
         init
       );
     }
-    if (url.includes("/api/proxy/cities")) {
+    if (pathname === "/api/proxy/cities") {
       return (
         overrides.cities ??
         (() => Promise.resolve(jsonResponse({ cities: [{ id: "city-1", name: "תל אביב" }] })))
       )(url, init);
     }
-    if (url.includes("/api/proxy/support-signup")) {
+    if (pathname === "/api/proxy/support-signup") {
       return (overrides.signup ?? (() => Promise.resolve(jsonResponse({ status: "success" }))))(
         url,
         init
@@ -51,9 +60,10 @@ export async function renderFormReady(overrides?: FetchOverrides) {
 
 /** Parses the JSON body of a given fetch mock call. */
 export function submittedBody(fetchMock: ReturnType<typeof installFetchMock>, callIndex = 0) {
-  const signupCalls = fetchMock.mock.calls.filter(([url]) =>
-    String(url).includes("/api/proxy/support-signup")
-  );
+  const signupCalls = fetchMock.mock.calls.filter(([url]) => {
+    const pathname = getPathname(String(url));
+    return pathname === "/api/proxy/support-signup";
+  });
   const [, init] = signupCalls[callIndex];
   return JSON.parse(String(init?.body));
 }
