@@ -92,14 +92,16 @@ export function SignupForm() {
   if (step === "done") {
     return (
       <div className={`${styles.wrap} ${styles.thankYou}`}>
-        <Image
-          src="/logo-mark.svg"
-          alt="עמך ישראל"
-          width={144}
-          height={28}
-          className={styles.mark}
-          priority
-        />
+        <a href="https://amchaisrael.co.il/" target="_blank" rel="noopener noreferrer" className={styles.markLink}>
+          <Image
+            src="/logo-mark.svg"
+            alt="עמך ישראל"
+            width={144}
+            height={28}
+            className={styles.mark}
+            priority
+          />
+        </a>
         <h1 className="text-heading">תודה שהצטרפת כתומכ/ת!</h1>
         <p className="text-body">יחד נוכל להשפיע.</p>
       </div>
@@ -108,14 +110,16 @@ export function SignupForm() {
 
   return (
     <form className={styles.wrap} onSubmit={handleSubmit}>
-      <Image
-        src="/logo-mark.svg"
-        alt="עמך ישראל"
-        width={144}
-        height={28}
-        className={styles.mark}
-        priority
-      />
+      <a href="https://amchaisrael.co.il/" target="_blank" rel="noopener noreferrer" className={styles.markLink}>
+        <Image
+          src="/logo-mark.svg"
+          alt="עמך ישראל"
+          width={144}
+          height={28}
+          className={styles.mark}
+          priority
+        />
+      </a>
       <h1 className="text-heading">מצטרפ/ת כתומכ/ת</h1>
 
       <div className={styles.field}>

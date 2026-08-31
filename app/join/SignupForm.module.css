@@ -7,11 +7,15 @@
   gap: var(--space-4);
 }
 
+.markLink {
+  align-self: center;
+  display: inline-flex;
+  margin-bottom: var(--space-2);
+}
+
 .mark {
   height: 32px;
   width: auto;
-  align-self: center;
-  margin-bottom: var(--space-2);
 }
 
 .field {
