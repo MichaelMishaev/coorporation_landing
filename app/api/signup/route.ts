@@ -96,13 +96,12 @@ export async function POST(request: Request): Promise<Response> {
     return jsonError(400);
   }
 
-  let normalizedCity: string | null = null;
-  if (typeof cityName === "string") {
-    const trimmedCity = cityName.trim();
-    if (trimmedCity.length > MAX_CITY_LENGTH) {
-      return jsonError(400);
-    }
-    normalizedCity = trimmedCity || null;
+  if (typeof cityName !== "string") {
+    return jsonError(400);
+  }
+  const trimmedCity = cityName.trim();
+  if (!trimmedCity || trimmedCity.length > MAX_CITY_LENGTH) {
+    return jsonError(400);
   }
 
   if (!UUID_PATTERN.test(clientSubmissionId)) {
@@ -119,7 +118,7 @@ export async function POST(request: Request): Promise<Response> {
   const input: SubmitSignupInput = {
     fullName: trimmedName,
     phone: trimmedPhone,
-    cityName: normalizedCity,
+    cityName: trimmedCity,
     clientSubmissionId,
     ip,
     honeypotTripped,

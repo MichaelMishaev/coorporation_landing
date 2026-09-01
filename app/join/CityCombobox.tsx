@@ -3,13 +3,12 @@
 import { useEffect, useId, useRef, useState } from "react";
 import styles from "./CityCombobox.module.css";
 
-const NO_CITY_LABEL = "ללא ציון עיר";
-
 type CityComboboxProps = {
   id: string;
   cities: readonly string[];
   value: string;
   onChange: (value: string) => void;
+  required?: boolean;
 };
 
 /**
@@ -25,7 +24,7 @@ type CityComboboxProps = {
  * an already-filled field never re-filters down to just the current
  * selection — the whole list is there to browse/search again immediately.
  */
-export function CityCombobox({ id, cities, value, onChange }: CityComboboxProps) {
+export function CityCombobox({ id, cities, value, onChange, required }: CityComboboxProps) {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
@@ -34,10 +33,7 @@ export function CityCombobox({ id, cities, value, onChange }: CityComboboxProps)
 
   const displayValue = isOpen ? query : value;
   const trimmedQuery = query.trim();
-  const filteredCities = trimmedQuery ? cities.filter((city) => city.includes(trimmedQuery)) : cities;
-  // "No city" is always offered first, regardless of the search text, so
-  // clearing a selection is always one click/Enter away.
-  const options = [NO_CITY_LABEL, ...filteredCities];
+  const options = trimmedQuery ? cities.filter((city) => city.includes(trimmedQuery)) : [...cities];
 
   useEffect(() => {
     if (!isOpen) return;
@@ -57,7 +53,7 @@ export function CityCombobox({ id, cities, value, onChange }: CityComboboxProps)
   }
 
   function selectOption(option: string) {
-    onChange(option === NO_CITY_LABEL ? "" : option);
+    onChange(option);
     setIsOpen(false);
   }
 
@@ -93,6 +89,7 @@ export function CityCombobox({ id, cities, value, onChange }: CityComboboxProps)
         className={styles.input}
         type="text"
         role="combobox"
+        aria-required={required || undefined}
         aria-expanded={isOpen}
         aria-controls={listboxId}
         aria-autocomplete="list"
@@ -111,41 +108,25 @@ export function CityCombobox({ id, cities, value, onChange }: CityComboboxProps)
       />
       {isOpen && (
         <ul className={styles.listbox} role="listbox" id={listboxId}>
-          <li
-            id={`${listboxId}-0`}
-            role="option"
-            aria-selected={value === ""}
-            className={`${styles.option} ${highlightedIndex === 0 ? styles.highlighted : ""}`}
-            onMouseDown={(event) => {
-              event.preventDefault();
-              selectOption(NO_CITY_LABEL);
-            }}
-            onMouseEnter={() => setHighlightedIndex(0)}
-          >
-            {NO_CITY_LABEL}
-          </li>
-          {filteredCities.length === 0 && trimmedQuery && (
+          {options.length === 0 && trimmedQuery && (
             <li className={styles.empty}>לא נמצאו ערים תואמות</li>
           )}
-          {filteredCities.map((city, filteredIndex) => {
-            const index = filteredIndex + 1;
-            return (
-              <li
-                key={city}
-                id={`${listboxId}-${index}`}
-                role="option"
-                aria-selected={value === city}
-                className={`${styles.option} ${highlightedIndex === index ? styles.highlighted : ""}`}
-                onMouseDown={(event) => {
-                  event.preventDefault();
-                  selectOption(city);
-                }}
-                onMouseEnter={() => setHighlightedIndex(index)}
-              >
-                {city}
-              </li>
-            );
-          })}
+          {options.map((city, index) => (
+            <li
+              key={city}
+              id={`${listboxId}-${index}`}
+              role="option"
+              aria-selected={value === city}
+              className={`${styles.option} ${highlightedIndex === index ? styles.highlighted : ""}`}
+              onMouseDown={(event) => {
+                event.preventDefault();
+                selectOption(city);
+              }}
+              onMouseEnter={() => setHighlightedIndex(index)}
+            >
+              {city}
+            </li>
+          ))}
         </ul>
       )}
     </div>

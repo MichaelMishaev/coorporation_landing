@@ -38,9 +38,9 @@ pass/fail checks.
 - `fullName` over 200 chars is rejected server-side (not silently
   truncated).
 - `phone` empty is rejected server-side; over 30 chars is rejected.
-- `cityName` blank is accepted (city is optional); an empty string is
-  normalized and never stored as `""` — a direct DB check after a
-  blank-city submission shows `NULL`, not an empty string.
+- `cityName` blank, missing, or whitespace-only is rejected
+  server-side (city is mandatory). An over-length city (>100 chars)
+  is rejected rather than truncated.
 - `cityName` is never validated against the static city list — an
   arbitrary string is accepted and stored as-is (matches the established
   free-text policy).

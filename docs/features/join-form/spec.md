@@ -6,7 +6,9 @@
 **Partially superseded (2026-08-31):** this document's **field-level**
 decisions (name/phone mandatory, city optional, the trim-and-validate
 rule, `maxLength` parity, the `clientSubmissionId` generation/rotation
-rules) still hold and are implemented on `develop`. Everything about
+rules) still hold and are implemented on `develop`, **except city**: as
+of 2026-09-01 city is mandatory (label, client validation, and
+server-side rejection of a missing/blank `cityName`). Everything about
 **entry points and link validity** — the `/join` vs `/join/[code]`
 distinction, the mount gate, the `loading`/`inactive` states, the
 link-check `useEffect`, and every scenario/criterion below keyed to those

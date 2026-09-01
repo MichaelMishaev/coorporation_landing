@@ -1,66 +1,57 @@
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { renderForm, submittedBody } from "./test-utils";
-
-async function fillRequiredFields(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText(/שם מלא/), "ישראל ישראלי");
-  await user.type(screen.getByLabelText(/טלפון נייד/), "0501234567");
-}
-
-async function selectCity(user: ReturnType<typeof userEvent.setup>, cityName: string) {
-  const combobox = screen.getByRole("combobox");
-  await user.click(combobox);
-  await user.click(await screen.findByRole("option", { name: cityName }));
-}
+import { fillNameAndPhone, renderForm, selectCity, submittedBody } from "./test-utils";
 
 describe("SignupForm city field", () => {
-  it("does not mark the city combobox as required", () => {
+  it("marks the city combobox as required", () => {
     renderForm();
-    expect(screen.getByLabelText(/עיר/)).not.toBeRequired();
+    expect(screen.getByLabelText("עיר")).toBeRequired();
   });
 
-  it("labels the field as optional", () => {
+  it("labels the field without an optional marker", () => {
     renderForm();
-    expect(screen.getByText("עיר (לא חובה)")).toBeInTheDocument();
+    expect(screen.getByText("עיר")).toBeInTheDocument();
+    expect(screen.queryByText(/לא חובה/)).not.toBeInTheDocument();
   });
 
-  it("offers a selectable, real 'no city' option instead of a disabled placeholder", async () => {
+  it("does not offer a 'no city' option", async () => {
     const user = userEvent.setup();
     renderForm();
     await user.click(screen.getByRole("combobox"));
-    const blankOption = screen.getByRole("option", { name: "ללא ציון עיר" });
-    expect(blankOption).not.toHaveAttribute("aria-disabled", "true");
+    expect(screen.queryByRole("option", { name: "ללא ציון עיר" })).not.toBeInTheDocument();
   });
 
-  it("omits cityName from the request body when left blank", async () => {
+  it("blocks submission and shows an inline error when city is left blank", async () => {
     const user = userEvent.setup();
     const fetchMock = renderForm();
-    await fillRequiredFields(user);
+    await fillNameAndPhone(user);
     await user.click(screen.getByRole("button", { name: "מצטרפ/ת כתומכ/ת" }));
-    const body = submittedBody(fetchMock);
-    expect(body).not.toHaveProperty("cityName");
+
+    expect(await screen.findByText("יש לבחור עיר")).toBeInTheDocument();
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("blocks submission when a city name is typed but not selected from the list", async () => {
+    const user = userEvent.setup();
+    const fetchMock = renderForm();
+    await fillNameAndPhone(user);
+    await user.click(screen.getByRole("combobox"));
+    await user.type(screen.getByRole("combobox"), "חיפה");
+    await user.click(screen.getByRole("button", { name: "מצטרפ/ת כתומכ/ת" }));
+
+    expect(await screen.findByText("יש לבחור עיר")).toBeInTheDocument();
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("sends cityName when a city is selected", async () => {
     const user = userEvent.setup();
     const fetchMock = renderForm();
-    await fillRequiredFields(user);
+    await fillNameAndPhone(user);
     await selectCity(user, "תל אביב-יפו");
     await user.click(screen.getByRole("button", { name: "מצטרפ/ת כתומכ/ת" }));
     const body = submittedBody(fetchMock);
     expect(body.cityName).toBe("תל אביב-יפו");
-  });
-
-  it("lets the supporter pick a city and then return to 'no city'", async () => {
-    const user = userEvent.setup();
-    renderForm();
-    const combobox = screen.getByRole<HTMLInputElement>("combobox");
-    await selectCity(user, "תל אביב-יפו");
-    expect(combobox.value).toBe("תל אביב-יפו");
-
-    await selectCity(user, "ללא ציון עיר");
-    expect(combobox.value).toBe("");
   });
 
   it("filters the option list as the supporter types", async () => {
@@ -73,8 +64,6 @@ describe("SignupForm city field", () => {
     const listbox = screen.getByRole("listbox");
     expect(within(listbox).getByRole("option", { name: "חיפה" })).toBeInTheDocument();
     expect(within(listbox).queryByRole("option", { name: "תל אביב-יפו" })).not.toBeInTheDocument();
-    // The "no city" option stays available regardless of the search text.
-    expect(within(listbox).getByRole("option", { name: "ללא ציון עיר" })).toBeInTheDocument();
   });
 
   it("shows a no-results message when the search matches nothing", async () => {
@@ -90,7 +79,7 @@ describe("SignupForm city field", () => {
   it("selects the highlighted option on Enter after arrowing down", async () => {
     const user = userEvent.setup();
     const fetchMock = renderForm();
-    await fillRequiredFields(user);
+    await fillNameAndPhone(user);
     const combobox = screen.getByRole("combobox");
     await user.click(combobox);
     await user.type(combobox, "חיפה");

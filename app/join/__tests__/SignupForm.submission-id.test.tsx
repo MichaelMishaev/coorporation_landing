@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { jsonResponse, renderForm, submittedBody } from "./test-utils";
+import { fillRequiredFields, jsonResponse, renderForm, submittedBody } from "./test-utils";
 
 async function fillAndSubmit(user: ReturnType<typeof userEvent.setup>) {
   await user.click(screen.getByRole("button", { name: "מצטרפ/ת כתומכ/ת" }));
@@ -16,8 +16,7 @@ describe("SignupForm clientSubmissionId lifecycle", () => {
       if (call === 1) return Promise.reject(new Error("network down"));
       return Promise.resolve(jsonResponse({ status: "success" }));
     });
-    await user.type(screen.getByLabelText(/שם מלא/), "ישראל ישראלי");
-    await user.type(screen.getByLabelText(/טלפון נייד/), "0501234567");
+    await fillRequiredFields(user);
 
     await fillAndSubmit(user);
     await screen.findByText("אירעה שגיאה. נסו שוב בעוד רגע.");
@@ -38,8 +37,7 @@ describe("SignupForm clientSubmissionId lifecycle", () => {
       if (call === 1) return Promise.resolve(jsonResponse({ status: "error" }, 500));
       return Promise.resolve(jsonResponse({ status: "success" }));
     });
-    await user.type(screen.getByLabelText(/שם מלא/), "ישראל ישראלי");
-    await user.type(screen.getByLabelText(/טלפון נייד/), "0501234567");
+    await fillRequiredFields(user);
 
     await fillAndSubmit(user);
     await screen.findByText("אירעה שגיאה. נסו שוב בעוד רגע.");
@@ -60,8 +58,7 @@ describe("SignupForm clientSubmissionId lifecycle", () => {
       if (call === 1) return Promise.resolve(jsonResponse({ status: "error" }, 400));
       return Promise.resolve(jsonResponse({ status: "success" }));
     });
-    await user.type(screen.getByLabelText(/שם מלא/), "ישראל ישראלי");
-    await user.type(screen.getByLabelText(/טלפון נייד/), "0501234567");
+    await fillRequiredFields(user);
 
     await fillAndSubmit(user);
     await screen.findByText("אירעה שגיאה. נסו שוב בעוד רגע.");
@@ -77,8 +74,7 @@ describe("SignupForm clientSubmissionId lifecycle", () => {
   it("mints a fresh id when a field is edited after any failed attempt", async () => {
     const user = userEvent.setup();
     const fetchMock = renderForm(() => Promise.reject(new Error("network down")));
-    await user.type(screen.getByLabelText(/שם מלא/), "ישראל ישראלי");
-    await user.type(screen.getByLabelText(/טלפון נייד/), "0501234567");
+    await fillRequiredFields(user);
     await fillAndSubmit(user);
     await screen.findByText("אירעה שגיאה. נסו שוב בעוד רגע.");
 

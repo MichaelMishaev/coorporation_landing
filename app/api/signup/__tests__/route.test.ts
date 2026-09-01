@@ -49,7 +49,7 @@ describe("POST /api/signup", () => {
       makeRequest({
         fullName: "   ",
         phone: "0501234567",
-        cityName: null,
+        cityName: "תל אביב-יפו",
         clientSubmissionId: crypto.randomUUID(),
       })
     );
@@ -61,7 +61,30 @@ describe("POST /api/signup", () => {
       makeRequest({
         fullName: "ישראל ישראלי",
         phone: "0212345", // landline-shaped, not a 10-digit "05" mobile number
-        cityName: null,
+        cityName: "תל אביב-יפו",
+        clientSubmissionId: crypto.randomUUID(),
+      })
+    );
+    expect(response.status).toBe(400);
+  });
+
+  it("returns 400 when cityName is missing", async () => {
+    const response = await POST(
+      makeRequest({
+        fullName: "ישראל ישראלי",
+        phone: "0501234567",
+        clientSubmissionId: crypto.randomUUID(),
+      })
+    );
+    expect(response.status).toBe(400);
+  });
+
+  it("returns 400 when cityName is blank", async () => {
+    const response = await POST(
+      makeRequest({
+        fullName: "ישראל ישראלי",
+        phone: "0501234567",
+        cityName: "   ",
         clientSubmissionId: crypto.randomUUID(),
       })
     );
@@ -71,10 +94,10 @@ describe("POST /api/signup", () => {
   it("returns 409 with no leaked data when clientSubmissionId is reused with a different payload", async () => {
     const id = crypto.randomUUID();
     await POST(
-      makeRequest({ fullName: "ישראל ישראלי", phone: "0501234567", cityName: null, clientSubmissionId: id })
+      makeRequest({ fullName: "ישראל ישראלי", phone: "0501234567", cityName: "תל אביב-יפו", clientSubmissionId: id })
     );
     const second = await POST(
-      makeRequest({ fullName: "דנה כהן", phone: "0521112222", cityName: null, clientSubmissionId: id })
+      makeRequest({ fullName: "דנה כהן", phone: "0521112222", cityName: "חיפה", clientSubmissionId: id })
     );
     expect(second.status).toBe(409);
     expect(await second.json()).toEqual({ status: "conflict" });
@@ -85,7 +108,7 @@ describe("POST /api/signup", () => {
       makeRequest({
         fullName: "בוט",
         phone: "0500000000",
-        cityName: null,
+        cityName: "תל אביב-יפו",
         clientSubmissionId: crypto.randomUUID(),
         website: "http://spam.example",
       })
@@ -101,7 +124,7 @@ describe("POST /api/signup", () => {
   it("trusts the rightmost X-Forwarded-For entry, not a client-supplied leftmost one", async () => {
     const response = await POST(
       makeRequest(
-        { fullName: "א", phone: "0500000000", cityName: null, clientSubmissionId: crypto.randomUUID() },
+        { fullName: "א", phone: "0500000000", cityName: "תל אביב-יפו", clientSubmissionId: crypto.randomUUID() },
         { "x-forwarded-for": "6.6.6.6, 7.7.7.7" }
       )
     );
@@ -117,7 +140,7 @@ describe("POST /api/signup", () => {
       body: JSON.stringify({
         fullName: "א",
         phone: "0500000000",
-        cityName: null,
+        cityName: "תל אביב-יפו",
         clientSubmissionId: crypto.randomUUID(),
       }),
     });
@@ -132,7 +155,7 @@ describe("POST /api/signup", () => {
       body: JSON.stringify({
         fullName: "א",
         phone: "0500000000",
-        cityName: null,
+        cityName: "תל אביב-יפו",
         clientSubmissionId: crypto.randomUUID(),
       }),
     });
@@ -143,7 +166,7 @@ describe("POST /api/signup", () => {
   it("returns 400 when the rightmost X-Forwarded-For entry isn't a plausible IP", async () => {
     const response = await POST(
       makeRequest(
-        { fullName: "א", phone: "0500000000", cityName: null, clientSubmissionId: crypto.randomUUID() },
+        { fullName: "א", phone: "0500000000", cityName: "תל אביב-יפו", clientSubmissionId: crypto.randomUUID() },
         { "x-forwarded-for": "not-an-ip" }
       )
     );
@@ -162,7 +185,7 @@ describe("POST /api/signup", () => {
         {
           fullName: "א".repeat(5000),
           phone: "0500000000",
-          cityName: null,
+          cityName: "תל אביב-יפו",
           clientSubmissionId: crypto.randomUUID(),
         },
         { "x-forwarded-for": "1.2.3.4", "content-length": "5000" }
@@ -176,7 +199,7 @@ describe("POST /api/signup", () => {
     for (let i = 0; i < 5; i++) {
       const response = await POST(
         makeRequest(
-          { fullName: "א", phone: "0500000000", cityName: null, clientSubmissionId: crypto.randomUUID() },
+          { fullName: "א", phone: "0500000000", cityName: "תל אביב-יפו", clientSubmissionId: crypto.randomUUID() },
           { "x-forwarded-for": ip }
         )
       );
@@ -184,7 +207,7 @@ describe("POST /api/signup", () => {
     }
     const sixth = await POST(
       makeRequest(
-        { fullName: "א", phone: "0500000000", cityName: null, clientSubmissionId: crypto.randomUUID() },
+        { fullName: "א", phone: "0500000000", cityName: "תל אביב-יפו", clientSubmissionId: crypto.randomUUID() },
         { "x-forwarded-for": ip }
       )
     );

@@ -6,7 +6,8 @@ decided" sections and restated as pass/fail checks.
 
 **Partially superseded (2026-08-31):** the "Fields" and "Submission
 behavior" sections below (values, validation, idempotency-key lifecycle)
-are still current. The "Entry points" section and every bullet mentioning
+are still current, **except city**: as of 2026-09-01 city is mandatory
+and cannot be left blank. The "Entry points" section and every bullet mentioning
 `inactive`, the mount gate, or `NEXT_PUBLIC_GENERIC_JOIN_CODE` are not —
 see `docs/features/standalone-signup/spec.md`.
 

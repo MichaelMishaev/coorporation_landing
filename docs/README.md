@@ -31,7 +31,7 @@ two files:
    errata at the top. Its volunteer-interest section was also separately
    removed earlier (see `features/join-form/spec.md` scenario 5).
 3. **`features/join-form/`** — the `/join` form's field-level requirements
-   and scenario decisions (name/phone mandatory, city optional,
+   and scenario decisions (name/phone/city mandatory,
    idempotency-key lifecycle, validation UX). **Correction:** these
    decisions hold only narrowly under the new standalone architecture —
    the field *values* (name/phone/city rules, the idempotency-key
@@ -81,8 +81,9 @@ and `/accessibility` placeholder content). Team-member name/role captions
 shipped (the lineup section now renders 11 named candidates individually,
 not the original single composite photo) — no longer part of this list.
 
-**Field-level fixes shipped to `develop`/dev (2026-08-31):** city optional
-(wire contract + UI), name trim/validation, `maxLength` parity, and the
+**Field-level fixes shipped to `develop`/dev (2026-08-31):** city was
+optional (wire contract + UI); as of 2026-09-01 city is mandatory.
+Name trim/validation, `maxLength` parity, and the
 `clientSubmissionId` idempotency-key lifecycle — see
 `features/join-form/spec.md` and its `expected-result.md`. These went in
 against the *old* proxy architecture. These were adapted to the new wire

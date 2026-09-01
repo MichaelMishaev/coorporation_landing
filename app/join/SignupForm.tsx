@@ -66,6 +66,11 @@ export function SignupForm() {
       return;
     }
 
+    if (!cityName) {
+      setError("יש לבחור עיר");
+      return;
+    }
+
     const payloadKey = JSON.stringify({ trimmedName, phone, cityName });
 
     let idToUse = submissionId;
@@ -87,7 +92,7 @@ export function SignupForm() {
         body: JSON.stringify({
           fullName: trimmedName,
           phone,
-          ...(cityName ? { cityName } : {}),
+          cityName,
           clientSubmissionId: idToUse,
           website: honeypot,
         }),
@@ -194,12 +199,13 @@ export function SignupForm() {
 
         <div className={styles.field}>
           <label className="text-label" htmlFor="city">
-            עיר (לא חובה)
+            עיר
           </label>
           <CityCombobox
             id="city"
             cities={CITIES}
             value={cityName}
+            required
             onChange={(newValue) => {
               invalidateSubmissionIdIfNeeded();
               setCityName(newValue);

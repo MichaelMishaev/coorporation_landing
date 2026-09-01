@@ -1,6 +1,9 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 import { SignupForm } from "../SignupForm";
+
+type User = ReturnType<typeof userEvent.setup>;
 
 type FetchImpl = (url: string, init?: RequestInit) => Promise<Response>;
 
@@ -37,6 +40,22 @@ export function renderForm(signupImpl?: FetchImpl) {
 export function submittedBody(fetchMock: ReturnType<typeof installFetchMock>, callIndex = 0) {
   const [, init] = fetchMock.mock.calls[callIndex];
   return JSON.parse(String(init?.body));
+}
+
+export async function fillNameAndPhone(user: User) {
+  await user.type(screen.getByLabelText(/שם מלא/), "ישראל ישראלי");
+  await user.type(screen.getByLabelText(/טלפון נייד/), "0501234567");
+}
+
+export async function selectCity(user: User, cityName: string) {
+  const combobox = screen.getByRole("combobox");
+  await user.click(combobox);
+  await user.click(await screen.findByRole("option", { name: cityName }));
+}
+
+export async function fillRequiredFields(user: User) {
+  await fillNameAndPhone(user);
+  await selectCity(user, "תל אביב-יפו");
 }
 
 // Re-exported for tests that need direct screen access alongside the helpers above.

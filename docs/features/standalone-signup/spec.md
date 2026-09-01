@@ -14,8 +14,9 @@ replaced by this one. Not deleted — kept as historical record per this
 repo's convention of marking supersession inline rather than removing.
 `docs/features/join-form/spec.md` is also partially superseded: its
 field-value decisions (name/phone mandatory, city optional, validation,
-the `clientSubmissionId` generation/rotation rules) carry forward
-unchanged, but everything about entry points and link validity (the
+the `clientSubmissionId` generation/rotation rules) carried forward
+unchanged at implementation time. **City is now mandatory (2026-09-01)**
+— see Validation below. Everything about entry points and link validity (the
 `/join`/`/join/[code]` split, the mount gate, the `loading`/`inactive`
 states, the wire contract) does not — see "Relationship to existing
 `/join` work" below for the full, precise breakdown.
@@ -131,7 +132,7 @@ currently has neither).
 | `id` | uuid, `@id @default(uuid())` | |
 | `fullName` | string, `@db.VarChar(200)` | Trimmed server-side too, not just client-side — mirrors `docs/features/join-form/spec.md` scenario 4's client-side rule, enforced again at the boundary. 200-char cap matches the client `maxLength` (see "Validation" below). |
 | `phone` | string, `@db.VarChar(30)` | No format validation beyond non-empty + max length (same policy as the existing join-form spec: stay unvalidated client-side per that doc's scenario 1 reasoning). 30-char cap matches the client `maxLength`. |
-| `cityName` | string, nullable, `@db.VarChar(100)` | Free text, from the static city list (see below). Optional — matches the existing field-requirements decision, unchanged. Empty string is normalized to `null` server-side (see "Validation"), never stored as `""`. **100-char cap added in this revision** — an earlier draft left this field unbounded, the only one of the three real form fields without a length cap on an unauthenticated write path; 100 comfortably exceeds every real city name on the static list and rejects anything pathological. |
+| `cityName` | string, nullable, `@db.VarChar(100)` | Free text, from the static city list (see below). **Mandatory on new submissions (2026-09-01)** — missing, non-string, or whitespace-only values are rejected server-side. The column stays nullable so rows collected while the field was optional remain valid. Not stored as `""`. **100-char cap** — comfortably exceeds every real city name on the static list and rejects anything pathological. |
 | `clientSubmissionId` | string, `@unique` | Idempotency key. See "Idempotency" below — this alone is **not** sufficient to detect payload-mismatched key reuse; paired with `payloadDigest`. |
 | `payloadDigest` | string | SHA-256 (or similar) hash of the normalized `{fullName, phone, cityName}` the client actually sent under this `clientSubmissionId`. Exists specifically to detect the case the plain unique constraint alone cannot: the same key reused with different data. See "Idempotency." |
 | `ip` | string | **Not nullable.** See "Client IP trust model" below — the fallback/trust policy is a real decision in this revision, not a blind carry-forward from the old proxy. Stored here for abuse review; the actual rate-limit key lives on `SignupRateLimitBucket.ip` (same value, same policy). |
@@ -382,16 +383,16 @@ trust client-side validation alone as the only gate):
   already chose (stay unvalidated rather than add a regex), now simply
   applied at this app's own boundary instead of relying on a
   `corporations`-side check that no longer exists.
-- `cityName`: optional. Trim; an empty string after trimming is
-  normalized to `null` (never stored as `""`) so "blank" has exactly one
-  representation. **Not validated against the static city list** —
+- `cityName`: required. Trim; reject if missing, not a string, or empty
+  after trim. Max 100 chars (reject over-length rather than silently
+  truncate). **Not validated against the static city list** —
   free-text storage with no re-validation against a canonical list is the
   same policy the superseded spec already established for city data
   (`docs/features/supporter-self-signup/spec.md` "City handling": "store
   free text, never re-validate"), carried forward for consistency even
   though the *reason* for it (deferring to a caller-scoped canonical
   city elsewhere) no longer applies — simplicity or a fixed
-  known-good `<select>` on the client makes a server-side allowlist check
+  known-good city picker on the client makes a server-side allowlist check
   low-value anyway.
 - `clientSubmissionId`: required, must be a syntactically valid UUID
   (reject malformed values before they ever reach the idempotency logic
@@ -418,7 +419,7 @@ none beyond the conflict shape):
 | Replay of an existing `clientSubmissionId` (matching digest) | `200` | `{ "status": "success" }` — identical to a fresh success; a retrying client can't tell the difference, which is correct, since from its perspective there isn't one. |
 | `clientSubmissionId` reused with a different payload | `409` | `{ "status": "conflict" }` — no other fields. |
 | Rate limit exceeded | `429` | `{ "status": "error" }` — generic, no distinguishing detail (matches the existing "no field-name/status leaks" policy already established for this route). |
-| Validation failure (empty/over-length name, over-length phone/city, malformed `clientSubmissionId`) | `400` | `{ "status": "error" }` |
+| Validation failure (empty/over-length name, empty/over-length city, over-length phone, malformed `clientSubmissionId`) | `400` | `{ "status": "error" }` |
 | Honeypot tripped | `200` | `{ "status": "success" }` — see "Abuse controls" above; must be indistinguishable from a real success. |
 | Untrustworthy/missing client IP (see "Client IP trust model") | `400` or `429` (implementation-time pick, both are already "generic client-facing failure" in this table) | `{ "status": "error" }` |
 
@@ -432,7 +433,7 @@ document, not in this checkable list — now all three are here together).
 
 **What carries forward from `docs/features/join-form/spec.md`, narrowly:**
 the field-level decisions that are about the *values themselves*, not
-about link/entry-point mechanics — name/phone mandatory, city optional,
+about link/entry-point mechanics — name/phone/city mandatory,
 the trim-and-validate rule, `maxLength` parity (now validated against this
 app's own schema limits instead of mirroring `corporations`'), and the
 `clientSubmissionId` **generation/rotation** rules (reuse-on-ambiguous-

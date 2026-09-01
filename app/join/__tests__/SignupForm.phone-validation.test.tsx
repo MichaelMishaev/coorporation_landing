@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { renderForm, submittedBody } from "./test-utils";
+import { fillNameAndPhone, renderForm, selectCity, submittedBody } from "./test-utils";
 
 async function fillOtherRequiredFields(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText(/שם מלא/), "ישראל ישראלי");
@@ -57,8 +57,8 @@ describe("SignupForm phone field", () => {
   it("sends the raw 10-digit phone number, without dashes, on a valid submit", async () => {
     const user = userEvent.setup();
     const fetchMock = renderForm();
-    await fillOtherRequiredFields(user);
-    await user.type(screen.getByLabelText(/טלפון נייד/), "0501234567");
+    await fillNameAndPhone(user);
+    await selectCity(user, "תל אביב-יפו");
     await user.click(screen.getByRole("button", { name: "מצטרפ/ת כתומכ/ת" }));
 
     const body = submittedBody(fetchMock);
