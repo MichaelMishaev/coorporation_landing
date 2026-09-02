@@ -28,5 +28,8 @@ export default async function JoinPage({
     }
   }
 
-  return <SignupForm prefillCity={prefillCity} />;
+  // referralCode is forwarded raw, independent of the prefill check above —
+  // corporations' own ReferralLink table (not this mirror) is authoritative
+  // for attribution and resolves even a revoked/mirror-stale code.
+  return <SignupForm prefillCity={prefillCity} referralCode={ref} />;
 }

@@ -5,6 +5,7 @@ export type SubmitSignupInput = {
   fullName: string;
   phone: string;
   cityName: string | null;
+  referralCode?: string | null;
   clientSubmissionId: string;
   ip: string;
   honeypotTripped: boolean;
@@ -22,15 +23,17 @@ export type SubmitSignupResult =
  */
 const RATE_LIMIT_THRESHOLD = 5;
 
-function computePayloadDigest(input: {
+export function computePayloadDigest(input: {
   fullName: string;
   phone: string;
-  cityName: string | null;
+  cityName?: string | null;
+  referralCode?: string | null;
 }): string {
   const normalized = JSON.stringify({
     fullName: input.fullName,
     phone: input.phone,
-    cityName: input.cityName,
+    cityName: input.cityName ?? null,
+    referralCode: input.referralCode ?? null,
   });
   return createHash("sha256").update(normalized).digest("hex");
 }
@@ -104,6 +107,7 @@ export async function submitSignup(
         fullName: input.fullName,
         phone: input.phone,
         cityName: input.cityName,
+        referralCode: input.referralCode ?? null,
         clientSubmissionId: input.clientSubmissionId,
         payloadDigest: digest,
         ip: input.ip,

@@ -33,7 +33,7 @@ function formatPhoneForDisplay(digits: string): string {
   return digits.length <= 3 ? digits : `${digits.slice(0, 3)}-${digits.slice(3)}`;
 }
 
-export function SignupForm({ prefillCity }: { prefillCity?: string } = {}) {
+export function SignupForm({ prefillCity, referralCode }: { prefillCity?: string; referralCode?: string } = {}) {
   const [step, setStep] = useState<Step>("form");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -93,6 +93,7 @@ export function SignupForm({ prefillCity }: { prefillCity?: string } = {}) {
           fullName: trimmedName,
           phone,
           cityName,
+          referralCode,
           clientSubmissionId: idToUse,
           website: honeypot,
         }),

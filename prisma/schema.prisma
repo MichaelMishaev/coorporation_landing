@@ -11,12 +11,14 @@ model SupportSignup {
   fullName           String   @db.VarChar(200)
   phone              String   @db.VarChar(30)
   cityName           String?  @db.VarChar(100)
+  referralCode       String?  @db.VarChar(64)
   clientSubmissionId String   @unique
   payloadDigest      String
   ip                 String
   honeypotTripped    Boolean  @default(false)
   createdAt          DateTime @default(now())
 
+  @@index([createdAt, id])
   @@map("support_signups")
 }
 

@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 
 const MAX_NAME_LENGTH = 200;
 const MAX_CITY_LENGTH = 100;
+const MAX_REFERRAL_CODE_LENGTH = 64;
 const MAX_BODY_BYTES = 4096;
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const IPV4_PATTERN = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
@@ -80,7 +81,7 @@ export async function POST(request: Request): Promise<Response> {
     return jsonError(400);
   }
 
-  const { fullName, phone, cityName, clientSubmissionId, website } = body as Record<string, unknown>;
+  const { fullName, phone, cityName, referralCode, clientSubmissionId, website } = body as Record<string, unknown>;
 
   if (typeof fullName !== "string" || typeof phone !== "string" || typeof clientSubmissionId !== "string") {
     return jsonError(400);
@@ -108,6 +109,14 @@ export async function POST(request: Request): Promise<Response> {
     return jsonError(400);
   }
 
+  // referralCode is best-effort attribution, not a validated field — an
+  // absent, wrong-typed, or over-length value is silently dropped rather
+  // than rejecting an otherwise-valid signup over it.
+  const trimmedReferralCode =
+    typeof referralCode === "string" && referralCode.trim().length > 0 && referralCode.trim().length <= MAX_REFERRAL_CODE_LENGTH
+      ? referralCode.trim()
+      : null;
+
   const ip = getClientIp(request);
   if (!ip) {
     return jsonError(400);
@@ -119,6 +128,7 @@ export async function POST(request: Request): Promise<Response> {
     fullName: trimmedName,
     phone: trimmedPhone,
     cityName: trimmedCity,
+    referralCode: trimmedReferralCode,
     clientSubmissionId,
     ip,
     honeypotTripped,
