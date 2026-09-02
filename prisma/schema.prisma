@@ -20,6 +20,21 @@ model SupportSignup {
   @@map("support_signups")
 }
 
+// Mirrors a PII-free subset of corporations' ReferralLink rows (opaque
+// code, active flag, optional city snapshot) so /join can validate a code
+// and prefill a city entirely locally, with zero runtime call back to
+// corporations. Populated only by the inbound sync endpoint, full-list-
+// replace semantics — see docs/superpowers/specs/2026-09-01-referral-signup-links-design.md
+// (corporations repo) Component 2.
+model ReferralLinkMirror {
+  code      String   @id
+  active    Boolean  @default(true)
+  cityName  String?  @db.VarChar(100)
+  updatedAt DateTime @updatedAt
+
+  @@map("referral_link_mirrors")
+}
+
 model SignupRateLimitBucket {
   id          String   @id @default(dbgenerated("gen_random_uuid()"))
   ip          String
