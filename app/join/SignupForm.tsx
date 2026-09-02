@@ -33,11 +33,11 @@ function formatPhoneForDisplay(digits: string): string {
   return digits.length <= 3 ? digits : `${digits.slice(0, 3)}-${digits.slice(3)}`;
 }
 
-export function SignupForm() {
+export function SignupForm({ prefillCity }: { prefillCity?: string } = {}) {
   const [step, setStep] = useState<Step>("form");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
-  const [cityName, setCityName] = useState("");
+  const [cityName, setCityName] = useState(prefillCity ?? "");
   const [honeypot, setHoneypot] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submissionId, setSubmissionId] = useState(() => crypto.randomUUID());
