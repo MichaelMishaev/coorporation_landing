@@ -21,15 +21,19 @@ export default async function JoinPage({
   const { ref } = await searchParams;
 
   let prefillCity: string | undefined;
+  let activeReferralCode: string | undefined;
   if (ref) {
     const mirrored = await prisma.referralLinkMirror.findUnique({ where: { code: ref } });
-    if (mirrored?.active && mirrored.cityName && (CITIES as readonly string[]).includes(mirrored.cityName)) {
-      prefillCity = mirrored.cityName;
+    if (mirrored?.active) {
+      activeReferralCode = ref;
+      if (mirrored.cityName && (CITIES as readonly string[]).includes(mirrored.cityName)) {
+        prefillCity = mirrored.cityName;
+      }
     }
   }
 
-  // referralCode is forwarded raw, independent of the prefill check above —
-  // corporations' own ReferralLink table (not this mirror) is authoritative
-  // for attribution and resolves even a revoked/mirror-stale code.
-  return <SignupForm prefillCity={prefillCity} referralCode={ref} />;
+  // Only a currently active mirrored code may create new attribution. A
+  // revoked or unknown URL still offers the general signup form, but it no
+  // longer assigns the signup to its former owner.
+  return <SignupForm prefillCity={prefillCity} referralCode={activeReferralCode} />;
 }
