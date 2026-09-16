@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 @media (min-width: 768px) {
@@ -20,10 +20,9 @@
   }
 }
 
-.logo {
-  max-width: 420px;
-  width: 100%;
-  height: auto;
+.mark {
+  height: 28px;
+  width: auto;
 }
 
 .subheading {
@@ -31,6 +30,109 @@
   max-width: 48ch;
 }
 
+.avatars {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  margin-block-start: var(--space-1);
+}
+
+.avatarRow {
+  display: flex;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-pill);
+  border: 3px solid var(--canvas);
+  box-shadow: 0 2px 8px rgba(61, 18, 96, 0.18);
+  object-fit: cover;
+  margin-inline-start: -14px;
+}
+
+.avatarRow > .avatar:first-child {
+  margin-inline-start: 0;
+}
+
+.avatarLead {
+  width: 56px;
+  height: 56px;
+  position: relative;
+  z-index: 1;
+}
+
+.avatarsLabel {
+  color: var(--text-secondary);
+}
+
+@media (min-width: 768px) {
+  .avatar {
+    width: 64px;
+    height: 64px;
+    margin-inline-start: -16px;
+  }
+
+  .avatarRow > .avatar:first-child {
+    margin-inline-start: 0;
+  }
+
+  .avatarLead {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+.ctaBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 420px;
+  margin-block-start: var(--space-2);
+  border-radius: var(--radius-pill);
+  padding: 8px 8px 8px var(--space-4);
+  background: var(--accent-cta);
+  box-shadow: 0 16px 32px rgba(155, 0, 214, 0.3);
+  text-decoration: none;
+  transform: scale(1);
+  transition:
+    transform var(--duration-release) var(--ease-standard),
+    background-color var(--duration-release) var(--ease-standard);
+}
+
+.ctaBar:active {
+  transform: scale(0.97);
+  background: var(--accent-cta-press);
+  transition-duration: var(--duration-press);
+}
+
+.ctaLabel {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text-on-accent);
+}
+
+.ctaIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--canvas);
+}
+
 .caption {
   color: var(--text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaBar:active {
+    transform: none;
+  }
 }

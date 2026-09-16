@@ -1,0 +1,51 @@
+.wrap {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-primary);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--accent-cta);
+  outline-offset: 2px;
+}
+
+.listbox {
+  position: absolute;
+  z-index: 20;
+  inset-inline: 0;
+  top: calc(100% + var(--space-1));
+  max-height: 260px;
+  overflow-y: auto;
+  margin: 0;
+  padding: var(--space-1) 0;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.option {
+  padding: var(--space-1) var(--space-2);
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.option.highlighted {
+  background: var(--surface-well);
+}
+
+.empty {
+  padding: var(--space-1) var(--space-2);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}

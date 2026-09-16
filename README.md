@@ -1,26 +1,42 @@
 # עמך ישראל — Public Landing + Supporter Signup
 
 Public-facing Hebrew/RTL Next.js app: the movement's landing page and the
-supporter self-signup flow (`/join`, `/join/[code]`). Holds no database
-credentials and no auth — every write proxies server-to-server to the
-management app (a separate private repo/service).
+supporter self-signup flow. **As currently deployed** (below): `/join` +
+`/join/[code]`, no database credentials, every write proxied
+server-to-server to the management app (a separate private repo/service).
 
-Design and architecture specs live in the `corporations` repo:
+**Pending change (2026-08-31):** this app is going standalone — its own
+database, no dependency on the management app — see
+`docs/features/standalone-signup/spec.md`. **Implemented and committed**
+on branch `standalone-signup-backend` (code complete, reviewed by two
+independent reviewers) — **not yet merged into `develop` and not yet
+deployed**. The description below (proxy architecture, three env vars)
+is still what's actually running in both dev and prod; the Development
+section further down already reflects the new `DATABASE_URL`-based setup
+for anyone working on the `standalone-signup-backend` branch.
 
-- `docs/features/leadMachine/2026-08-26-landing-page-design-spec.md` — tokens, section plan, copy sourcing.
-- `docs/features/leadMachine/2026-08-26-supporter-self-signup-design.md` — API contract, data model, the same-origin proxy this app implements.
+Design/architecture specs are copied into this repo's own `docs/` (source of
+truth lives in the `corporations` repo) — start at `docs/README.md`, which
+indexes each feature's `spec.md` + `expected-result.md` under
+`docs/features/`.
 
 ## Development
 
 ```bash
 npm install
-cp .env.example .env.local   # fill in MANAGEMENT_APP_BASE_URL, PUBLIC_PROXY_SECRET, NEXT_PUBLIC_GENERIC_JOIN_CODE
+cp .env.example .env.local   # fill in DATABASE_URL (a Postgres connection string —
+                              # for local dev, the Railway dev Postgres's public TCP
+                              # proxy connection string, or any local Postgres)
+npx prisma migrate dev
 npm run dev
 ```
 
-The signup form will not function until the management app's
-`/api/public/*` routes (spec'd, not yet implemented) exist — this app is
-built against that contract, not against a running backend yet.
+This reflects the standalone backend on branch `standalone-signup-backend`
+(own Postgres, own `/api/signup` route) — see
+`docs/features/standalone-signup/spec.md`. It is implemented and committed
+but not yet merged into `develop` or deployed; the management-app proxy
+setup described above is what's still live in dev/prod until this branch
+merges.
 
 ## What's intentionally not built yet
 
@@ -29,7 +45,6 @@ built against that contract, not against a running backend yet.
   reasonable v1 cut, not a silent scope drop.
 - §5.5 (optional "why join us" benefit grid) is omitted — conditional on
   the campaign supplying real copy, per spec.
-- Team-grid name/role legend — the photo is real; the caption data isn't.
 - Favicon set, OG image crop to exact 1200×630 — see spec §8.
 - `/privacy` and `/accessibility` are placeholder stubs, not real legal
   content.
