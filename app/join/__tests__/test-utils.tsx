@@ -53,9 +53,14 @@ export async function selectCity(user: User, cityName: string) {
   await user.click(await screen.findByRole("option", { name: cityName }));
 }
 
+export async function acceptPrivacy(user: User) {
+  await user.click(screen.getByRole("checkbox", { name: /תנאי השימוש ולמדיניות הפרטיות/ }));
+}
+
 export async function fillRequiredFields(user: User) {
   await fillNameAndPhone(user);
   await selectCity(user, "תל אביב-יפו");
+  await acceptPrivacy(user);
 }
 
 // Re-exported for tests that need direct screen access alongside the helpers above.

@@ -7,9 +7,12 @@ export type SubmitSignupInput = {
   cityName: string | null;
   referralCode?: string | null;
   clientSubmissionId: string;
+  privacyAccepted: true;
   ip: string;
   honeypotTripped: boolean;
 };
+
+export const PRIVACY_POLICY_VERSION = "amchaisrael-privacy-v1";
 
 export type SubmitSignupResult =
   | { type: "success" }
@@ -112,6 +115,8 @@ export async function submitSignup(
         payloadDigest: digest,
         ip: input.ip,
         honeypotTripped: input.honeypotTripped,
+        privacyAcceptedAt: new Date(),
+        privacyPolicyVersion: PRIVACY_POLICY_VERSION,
       },
     });
     return { type: "success" };

@@ -25,6 +25,7 @@ function baseInput(overrides: Partial<SubmitSignupInput> = {}): SubmitSignupInpu
     phone: "0501234567",
     cityName: "תל אביב-יפו",
     clientSubmissionId: crypto.randomUUID(),
+    privacyAccepted: true,
     ip: "1.2.3.4",
     honeypotTripped: false,
     ...overrides,
@@ -40,6 +41,8 @@ describe("submitSignup", () => {
     const rows = await prisma.supportSignup.findMany();
     expect(rows).toHaveLength(1);
     expect(rows[0].clientSubmissionId).toBe(input.clientSubmissionId);
+    expect(rows[0].privacyAcceptedAt).toBeInstanceOf(Date);
+    expect(rows[0].privacyPolicyVersion).toBe("amchaisrael-privacy-v1");
   });
 
   it("returns success without creating a second row on an exact replay", async () => {

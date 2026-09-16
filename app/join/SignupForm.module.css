@@ -60,6 +60,32 @@
   outline-offset: 2px;
 }
 
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  cursor: pointer;
+}
+
+.checkbox {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+  accent-color: var(--accent-cta);
+  cursor: pointer;
+}
+
+.privacyLink {
+  color: var(--accent-cta);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .honeypot {
   position: absolute;
   width: 1px;

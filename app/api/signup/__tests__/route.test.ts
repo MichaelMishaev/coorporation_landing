@@ -26,11 +26,32 @@ function makeRequest(
   return new Request("http://localhost/api/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json", ...headers },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ privacyAccepted: true, ...body }),
   });
 }
 
 describe("POST /api/signup", () => {
+  it.each([undefined, false, "true"])(
+    "returns 400 when privacy consent is not the literal boolean true (%s)",
+    async (privacyAccepted) => {
+      const response = await POST(
+        new Request("http://localhost/api/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "x-forwarded-for": "1.2.3.4" },
+          body: JSON.stringify({
+            fullName: "ישראל ישראלי",
+            phone: "0501234567",
+            cityName: "תל אביב-יפו",
+            clientSubmissionId: crypto.randomUUID(),
+            ...(privacyAccepted === undefined ? {} : { privacyAccepted }),
+          }),
+        })
+      );
+
+      expect(response.status).toBe(400);
+    }
+  );
+
   it("returns 200 success for a valid new signup", async () => {
     const response = await POST(
       makeRequest({

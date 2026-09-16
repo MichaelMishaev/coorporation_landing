@@ -16,6 +16,8 @@ model SupportSignup {
   payloadDigest      String
   ip                 String
   honeypotTripped    Boolean  @default(false)
+  privacyAcceptedAt  DateTime? @map("privacy_accepted_at") @db.Timestamptz
+  privacyPolicyVersion String? @map("privacy_policy_version") @db.VarChar(64)
   createdAt          DateTime @default(now())
 
   @@index([createdAt, id])

@@ -1,7 +1,7 @@
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { fillNameAndPhone, renderForm, selectCity, submittedBody } from "./test-utils";
+import { acceptPrivacy, fillNameAndPhone, renderForm, selectCity, submittedBody } from "./test-utils";
 
 describe("SignupForm city field", () => {
   it("marks the city combobox as required", () => {
@@ -49,6 +49,7 @@ describe("SignupForm city field", () => {
     const fetchMock = renderForm();
     await fillNameAndPhone(user);
     await selectCity(user, "תל אביב-יפו");
+    await acceptPrivacy(user);
     await user.click(screen.getByRole("button", { name: "מצטרפ/ת כתומכ/ת" }));
     const body = submittedBody(fetchMock);
     expect(body.cityName).toBe("תל אביב-יפו");
@@ -86,6 +87,7 @@ describe("SignupForm city field", () => {
     await user.keyboard("{ArrowDown}{Enter}");
 
     expect((combobox as HTMLInputElement).value).toBe("חיפה");
+    await acceptPrivacy(user);
     await user.click(screen.getByRole("button", { name: "מצטרפ/ת כתומכ/ת" }));
     expect(submittedBody(fetchMock).cityName).toBe("חיפה");
   });

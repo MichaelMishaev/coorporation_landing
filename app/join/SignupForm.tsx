@@ -38,6 +38,7 @@ export function SignupForm({ prefillCity, referralCode }: { prefillCity?: string
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [cityName, setCityName] = useState(prefillCity ?? "");
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submissionId, setSubmissionId] = useState(() => crypto.randomUUID());
@@ -71,6 +72,11 @@ export function SignupForm({ prefillCity, referralCode }: { prefillCity?: string
       return;
     }
 
+    if (!privacyAccepted) {
+      setError("יש לאשר את תנאי השימוש ומדיניות הפרטיות");
+      return;
+    }
+
     const payloadKey = JSON.stringify({ trimmedName, phone, cityName });
 
     let idToUse = submissionId;
@@ -95,6 +101,7 @@ export function SignupForm({ prefillCity, referralCode }: { prefillCity?: string
           cityName,
           referralCode,
           clientSubmissionId: idToUse,
+          privacyAccepted,
           website: honeypot,
         }),
       });
@@ -149,7 +156,7 @@ export function SignupForm({ prefillCity, referralCode }: { prefillCity?: string
 
   return (
     <div className={styles.wrap}>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit} noValidate>
         <a href={SITE_URL} target="_blank" rel="noopener noreferrer" className={styles.markLink}>
           <Image
             src="/logo-mark.svg"
@@ -214,6 +221,29 @@ export function SignupForm({ prefillCity, referralCode }: { prefillCity?: string
           />
         </div>
 
+        <label className={styles.consent} htmlFor="privacyAccepted">
+          <input
+            id="privacyAccepted"
+            className={styles.checkbox}
+            type="checkbox"
+            required
+            aria-describedby={error ? "signup-error" : undefined}
+            checked={privacyAccepted}
+            onChange={(event) => setPrivacyAccepted(event.target.checked)}
+          />
+          <span>
+            קראתי ואני מסכים/ה ל
+            <a
+              className={styles.privacyLink}
+              href="https://amchaisrael.co.il/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              תנאי השימוש ולמדיניות הפרטיות
+            </a>
+          </span>
+        </label>
+
         {/* Honeypot — invisible to real users, spec "Abuse controls" */}
         <div className={styles.honeypot} aria-hidden="true">
           <label htmlFor="website">Website</label>
@@ -227,7 +257,11 @@ export function SignupForm({ prefillCity, referralCode }: { prefillCity?: string
           />
         </div>
 
-        {error && <p className={`text-body ${styles.error}`}>{error}</p>}
+        {error && (
+          <p id="signup-error" role="alert" aria-live="polite" className={`text-body ${styles.error}`}>
+            {error}
+          </p>
+        )}
 
         <button className={styles.submit} type="submit" disabled={step === "submitting"}>
           מצטרפ/ת כתומכ/ת

@@ -17,6 +17,8 @@ type ExportedSignup = {
   phone: string;
   cityName: string | null;
   referralCode: string | null;
+  privacyAcceptedAt: string | null;
+  privacyPolicyVersion: string | null;
   createdAt: string;
 };
 
@@ -96,6 +98,8 @@ async function createSignup(overrides: {
       payloadDigest: `${TEST_MARKER}-digest-${crypto.randomUUID()}`,
       ip: `${TEST_MARKER}-${overrides.suffix}`,
       honeypotTripped: overrides.honeypotTripped ?? false,
+      privacyAcceptedAt: new Date(),
+      privacyPolicyVersion: "amchaisrael-privacy-v1",
       ...(overrides.createdAt === undefined ? {} : { createdAt: overrides.createdAt }),
     },
   });
@@ -164,6 +168,8 @@ describe("GET /api/internal/signups/export", () => {
       "phone",
       "cityName",
       "referralCode",
+      "privacyAcceptedAt",
+      "privacyPolicyVersion",
       "createdAt",
     ]);
   });

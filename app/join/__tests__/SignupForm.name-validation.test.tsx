@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { renderForm, selectCity, submittedBody } from "./test-utils";
+import { acceptPrivacy, renderForm, selectCity, submittedBody } from "./test-utils";
 
 describe("SignupForm name validation", () => {
   it("blocks submission and shows an inline error for a whitespace-only name", async () => {
@@ -21,6 +21,7 @@ describe("SignupForm name validation", () => {
     await user.type(screen.getByLabelText(/שם מלא/), "  ישראל ישראלי  ");
     await user.type(screen.getByLabelText(/טלפון נייד/), "0501234567");
     await selectCity(user, "תל אביב-יפו");
+    await acceptPrivacy(user);
     await user.click(screen.getByRole("button", { name: "מצטרפ/ת כתומכ/ת" }));
 
     await vi.waitFor(() => {

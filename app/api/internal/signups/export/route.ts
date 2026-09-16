@@ -79,6 +79,8 @@ export async function GET(request: NextRequest): Promise<Response> {
       phone: true,
       cityName: true,
       referralCode: true,
+      privacyAcceptedAt: true,
+      privacyPolicyVersion: true,
       createdAt: true,
     },
   });

@@ -81,9 +81,14 @@ export async function POST(request: Request): Promise<Response> {
     return jsonError(400);
   }
 
-  const { fullName, phone, cityName, referralCode, clientSubmissionId, website } = body as Record<string, unknown>;
+  const { fullName, phone, cityName, referralCode, clientSubmissionId, privacyAccepted, website } = body as Record<string, unknown>;
 
-  if (typeof fullName !== "string" || typeof phone !== "string" || typeof clientSubmissionId !== "string") {
+  if (
+    typeof fullName !== "string" ||
+    typeof phone !== "string" ||
+    typeof clientSubmissionId !== "string" ||
+    privacyAccepted !== true
+  ) {
     return jsonError(400);
   }
 
@@ -130,6 +135,7 @@ export async function POST(request: Request): Promise<Response> {
     cityName: trimmedCity,
     referralCode: trimmedReferralCode,
     clientSubmissionId,
+    privacyAccepted: true,
     ip,
     honeypotTripped,
   };
