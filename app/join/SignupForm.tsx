@@ -29,6 +29,7 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [cityId, setCityId] = useState("");
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [declaration, setDeclaration] = useState<SupportSignupResponse | null>(null);
@@ -68,6 +69,12 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setError(null);
+
+    if (!privacyAccepted) {
+      setError("יש לאשר את תנאי השימוש ומדיניות הפרטיות");
+      return;
+    }
+
     setStep("submitting");
 
     try {
@@ -80,6 +87,7 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
           cityId,
           linkCode,
           clientSubmissionId: crypto.randomUUID(),
+          privacyAccepted,
           honeypot,
         }),
       });
@@ -165,7 +173,7 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
   }
 
   return (
-    <form className={styles.wrap} onSubmit={handleSubmit}>
+    <form className={styles.wrap} onSubmit={handleSubmit} noValidate>
       <h1 className="text-heading">מצטרפ/ת כתומכ/ת</h1>
 
       <div className={styles.field}>
@@ -219,6 +227,29 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
         </select>
       </div>
 
+      <label className={styles.consent} htmlFor="privacyAccepted">
+        <input
+          id="privacyAccepted"
+          className={styles.checkbox}
+          type="checkbox"
+          required
+          aria-describedby={error ? "signup-error" : undefined}
+          checked={privacyAccepted}
+          onChange={(event) => setPrivacyAccepted(event.target.checked)}
+        />
+        <span>
+          קראתי ואני מסכים/ה ל
+          <a
+            className={styles.privacyLink}
+            href="https://amchaisrael.co.il/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            תנאי השימוש ולמדיניות הפרטיות
+          </a>
+        </span>
+      </label>
+
       {/* Honeypot — invisible to real users, spec "Abuse controls" */}
       <div className={styles.honeypot} aria-hidden="true">
         <label htmlFor="website">Website</label>
@@ -232,7 +263,11 @@ export function SignupForm({ linkCode }: { linkCode: string }) {
         />
       </div>
 
-      {error && <p className={`text-body ${styles.error}`}>{error}</p>}
+      {error && (
+        <p id="signup-error" role="alert" aria-live="polite" className={`text-body ${styles.error}`}>
+          {error}
+        </p>
+      )}
 
       <button className={styles.submit} type="submit" disabled={step === "submitting"}>
         מצטרפ/ת כתומכ/ת
