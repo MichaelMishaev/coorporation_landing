@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import styles from "./SignupForm.module.css";
 import { CityCombobox } from "./CityCombobox";
+import { SIGNUP_LOCALITIES, SIGNUP_CATALOG_VERSION, displaySignupCity } from "@/lib/signup-localities";
 import { CITIES } from "@/lib/cities";
 
 type Step = "form" | "submitting" | "done";
@@ -33,11 +34,12 @@ function formatPhoneForDisplay(digits: string): string {
   return digits.length <= 3 ? digits : `${digits.slice(0, 3)}-${digits.slice(3)}`;
 }
 
-export function SignupForm({ prefillCity, referralCode }: { prefillCity?: string; referralCode?: string } = {}) {
+export function SignupForm({ prefillCity, referralCode, localitiesEnabled = false }: { prefillCity?: string; referralCode?: string; localitiesEnabled?: boolean } = {}) {
+  const cities = localitiesEnabled ? [...CITIES, ...SIGNUP_LOCALITIES.map(place => place.name)] : CITIES;
   const [step, setStep] = useState<Step>("form");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
-  const [cityName, setCityName] = useState(prefillCity ?? "");
+  const [cityName, setCityName] = useState(displaySignupCity(prefillCity ?? ""));
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -77,6 +79,7 @@ export function SignupForm({ prefillCity, referralCode }: { prefillCity?: string
       return;
     }
 
+    const locality = localitiesEnabled ? SIGNUP_LOCALITIES.find(place => place.name === cityName) : undefined;
     const payloadKey = JSON.stringify({ trimmedName, phone, cityName });
 
     let idToUse = submissionId;
@@ -98,7 +101,8 @@ export function SignupForm({ prefillCity, referralCode }: { prefillCity?: string
         body: JSON.stringify({
           fullName: trimmedName,
           phone,
-          cityName,
+          cityName: locality?.displayCity ?? cityName,
+          ...(locality ? { locationId: locality.id, catalogVersion: SIGNUP_CATALOG_VERSION } : {}),
           referralCode,
           clientSubmissionId: idToUse,
           privacyAccepted,
@@ -211,7 +215,7 @@ export function SignupForm({ prefillCity, referralCode }: { prefillCity?: string
           </label>
           <CityCombobox
             id="city"
-            cities={CITIES}
+            cities={cities}
             value={cityName}
             required
             onChange={(newValue) => {

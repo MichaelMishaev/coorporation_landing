@@ -1,0 +1,1206 @@
+[
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "3cc6016a-fcce-4abf-8e66-c1de462a239c",
+    "name": "אחיה",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "3acc23bd-0f1a-43ad-8a9d-7ab65e17a23b",
+    "name": "אלון",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "6d1de0d8-bd3c-424d-8566-d9b08a584784",
+    "name": "אש קודש",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "a064ea73-c2af-4348-b2a7-a8cd79889c4c",
+    "name": "בית אל",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "44264394-0f9b-48cd-8188-97353b36d15c",
+    "name": "בית חורון",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "ec04e555-d64a-4691-bf14-5c032630ecff",
+    "name": "גאולת ציון",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "0b8061ba-065c-4494-8edd-a6285cbae27e",
+    "name": "גבע בנימין (אדם)",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "fe39082b-315e-426b-8626-bbfcb69f5f68",
+    "name": "גבעת אסף",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "021de4eb-3947-48d6-afe5-03599093720b",
+    "name": "דולב",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "e3f65c60-a394-4c95-827d-3888236040a8",
+    "name": "זית רענן",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "094e489d-9115-40e3-a5d4-2ad70ce2a4be",
+    "name": "חוות ארץ צבי",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "c8ae4323-dd19-451d-a19c-f574260e054b",
+    "name": "חוות מיכה",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "97f41682-a464-46d2-a9e1-623d5443a8c8",
+    "name": "חוות משעול הירדן",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "18fd381a-d639-4138-a270-920ebe282d72",
+    "name": "חוות עינות קדם",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "94a36df1-385a-4275-bef8-3dfdb2abc9ac",
+    "name": "חוות עמק שילה",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "4b1f7700-102a-4951-ad13-9ff2de29cdc6",
+    "name": "חוות שדה אפרים",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "f2e43721-7a58-47ee-abf5-4adb00d1a0a1",
+    "name": "חרשה",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "fb24c254-7e40-429b-8dfc-4b118b095809",
+    "name": "חשמונאים",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "2f49b0f9-8018-4193-a623-48b47f5f9a16",
+    "name": "טלמון",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "d70bc335-faa2-4b1f-ae2c-e7bc18f390ff",
+    "name": "ישוב הדעת",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "121a929a-d986-4a73-89f4-a08b793ad417",
+    "name": "כוכב השחר",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "efa05bb3-72a8-4ad9-8d54-132511f4668b",
+    "name": "כוכב יעקב",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "6295e324-7d7a-454b-af7f-5e3e8cb7fecd",
+    "name": "כפר אדומים",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "6302a0f4-9c4a-4191-9c64-c99870978143",
+    "name": "כפר האורנים",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "59056390-9259-4f68-b941-14fb178a5e1c",
+    "name": "כרם רעים",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "e3a29cfc-01a8-4b17-b5f1-47c901dacec1",
+    "name": "מבוא חורון",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "f75c37e6-2436-499a-9630-7b647ba60466",
+    "name": "מגרון החדש",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "2761bcd3-0beb-40ea-b4f2-742b6b4960ba",
+    "name": "מלאכי השלום",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "8b139ae4-7aa4-45d5-92f9-22f10c7c68b0",
+    "name": "מעוז אסתר",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "5dba724d-7981-444c-8ea1-26e983453b70",
+    "name": "מעלה לבונה",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "e6709828-bf02-45d8-86c2-5c558a5b1d64",
+    "name": "מעלה מכמש",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "3cd02a6f-ad59-475c-9ece-9823818a90a8",
+    "name": "מצפה דני",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "63b9554a-68f3-43dd-aaf1-66c503e032c8",
+    "name": "מצפה חגית",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "295287a5-81e4-4c66-974c-dfd2b666ad4d",
+    "name": "מצפה יריחו",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "b5fe416f-af1d-4c8d-97d8-278cd46bd31a",
+    "name": "מצפה כרמים",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "3ee016de-4c95-4212-bad3-b184dba6a48f",
+    "name": "מתתיהו",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "eb39d661-7835-4d81-a9cd-80b4dca5874a",
+    "name": "נווה ארז",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "cafdb78b-820e-4c72-ab0f-4ae72e2ff780",
+    "name": "נווה צוף (חלמיש)",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "cfd45aeb-f5af-4505-9161-9ba9822efacb",
+    "name": "נופי פרת",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "c5851b3d-883a-4d69-91d4-292dc3f7d876",
+    "name": "נחליאל",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "4825439f-88d7-4194-b80d-0c09d88312f4",
+    "name": "נילי",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "6715ef9d-2d5b-41c6-bc7c-76a9e0c6bc4b",
+    "name": "נעלה",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "229c212f-e58b-4f89-a9ec-24a736131829",
+    "name": "נריה",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "d369aaae-acc9-4c1a-8f29-444cbcbc0893",
+    "name": "עדי עד",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "efddce42-802c-40fa-813b-e45084e45e2b",
+    "name": "עוז ציון",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "76177e27-70c6-4421-9392-1e469e79f8db",
+    "name": "עטרת",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "b9b2e688-88e5-4520-a3d1-fb3d5aeaeb67",
+    "name": "עלי",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "0721eeb6-1e88-4584-8029-7289ee9eb78f",
+    "name": "עמיחי",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "a369227e-0c68-41c3-8f66-d5d15b0927a2",
+    "name": "ענתות (עלמון)",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "ad0f3ad5-89f1-4c30-803e-5027a15443c3",
+    "name": "עפרה",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "dbd8bd54-225b-4fab-a8f3-f8b1ce8cb57f",
+    "name": "פסגות",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "a5c0436f-22ca-43df-b0e8-d65e3ba27abe",
+    "name": "צופית",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "4586e7aa-c6d9-4ebd-bdf4-6dc473a9ad89",
+    "name": "קידה",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "dd8e4df6-12b4-46e3-85cf-0e8a159724d1",
+    "name": "רימונים",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "a5dd5c12-7be3-4a60-9f87-7741bd3d1ec6",
+    "name": "רמת מגרון",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "66301c6f-adf5-4661-90cb-3d2eb72a1bfe",
+    "name": "שבות רחל",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "fa890a90-a004-46da-a0a2-da261afb79ef",
+    "name": "שילה",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "בינימין",
+    "cityId": "975b578d-58e7-4a09-a377-4f665dcb9280",
+    "id": "e2a07c8c-b750-4c44-9720-6d305aa2f5e0",
+    "name": "תל ציון",
+    "displayCity": "בנימין"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "9be00e33-8d7b-46c0-9082-c8e3c9e011da",
+    "name": "אביגיל",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "73f47a7c-70cb-4c62-803d-c519dfd9b4ee",
+    "name": "אדורה",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "49a38064-acc8-4dbd-ba5d-6c4ba82de912",
+    "name": "איבי הנחל",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "8fff0c53-c7a8-46d4-9e06-02bc451b8685",
+    "name": "אלון שבות",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "d8a8ed92-cd46-4231-a844-7a13374336dc",
+    "name": "אלעזר",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "c639d882-e805-4111-962a-26693ef30e0d",
+    "name": "אפרת",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "44c389a2-b9e1-4728-b02a-3df3093f85fc",
+    "name": "אשכולות",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "fe13ad95-5350-4e6d-9836-9139fcea3b90",
+    "name": "בית הדסה",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "c515cf3d-bb98-4d56-bab7-ec84ecbd4973",
+    "name": "בית המכפלה",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "7c43fff8-2230-44d4-971e-a5b85e9fa5aa",
+    "name": "בית חגי",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "5aca5aa4-42aa-46fb-a758-1bf146ca8587",
+    "name": "בית חסד",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "ff87b839-1bcc-4f4b-8960-39ac67e8bcdc",
+    "name": "בית רחל/לאה",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "e7b02866-4231-4e94-a168-31bcd11dcf55",
+    "name": "בת עין",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "b6fda4b3-4a4c-4cb4-8b7a-e3dbc6b1aee2",
+    "name": "גבעת אהוביה",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "2325e9c6-9ada-4bf9-bbc4-4be8e4715f5e",
+    "name": "גבעת גל",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "5f49389e-001f-4bfd-89c0-c2146f613d9b",
+    "name": "גבעת החי\"ש",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "1d6f15b4-52ba-4b10-acd0-46c57971019b",
+    "name": "גבעת התמר / גבעת הדגן",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "283e0ea2-32de-4c65-8cb0-1c9be71f290c",
+    "name": "גבעת חנן",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "e98e4730-57ce-4c45-8ddc-de0c35067590",
+    "name": "הר גילה",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "a1e58d15-7c71-47fb-90a6-7ad0dc0aa023",
+    "name": "חוות אבו דמדם",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "ef8eb622-c191-4c66-9891-860d7b4fcbd5",
+    "name": "חוות אורי",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "03f33c02-00fd-4b23-a331-20336c50d9e9",
+    "name": "חוות אפרים",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "68271bcc-ff5a-4510-a66f-42eab3fe8045",
+    "name": "חוות בנו",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "ec6bc563-bf8f-4e0b-aa5c-9e0f92b708e0",
+    "name": "חוות דורות",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "47761f25-f5cc-4a7b-84a3-5c45a0563b19",
+    "name": "חוות המור",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "d053be7f-cf72-45a2-9c17-49a155bcef4e",
+    "name": "חוות זיב",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "eefab3b7-6282-4f1f-a8b4-9edb740dd7fa",
+    "name": "חוות יאיר (דרום)",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "932fcf6b-b315-4285-af32-c78ce54c8c58",
+    "name": "חוות יהודה (חוות דרור)",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "76d11238-0bdd-4822-ab7f-4e759b194fcd",
+    "name": "חוות יש\"י",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "25e7f608-a046-4259-a8fa-c00bce6ba906",
+    "name": "חוות מטר",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "7438e92c-6fc4-4363-9ee7-7ad2fadf3140",
+    "name": "חוות מעון (גבעת מעון)",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "5755c147-3a81-4b64-bc0f-31e9b0cf918a",
+    "name": "חוות נחל חלץ",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "5728f670-129f-416c-8f31-374ec545742f",
+    "name": "חוות סוסיא המערבית",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "bcad6370-530b-40fb-ba1e-6e0c60d30799",
+    "name": "חוות עיטם (גבעת עיטם)",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "41431c74-5e15-4797-b824-1c3337982184",
+    "name": "חוות ענק",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "3f8d5738-a7f5-496d-af52-8db3e1c7abaf",
+    "name": "חוות ערוגות",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "0df5e28f-3aa5-457b-ab99-dd2e48c9c238",
+    "name": "חוות קשואלה",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "4a208a06-d434-4074-93bd-e9c01aa82b13",
+    "name": "חוות שדה בר",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "f574ab70-8c47-4ca3-8121-dcf270563707",
+    "name": "טנא עומרים",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "230c9ff0-e14c-485b-b777-3640db9a899c",
+    "name": "כפר עציון",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "d8ea444d-badf-4ae3-bf4e-14889193b6da",
+    "name": "כרמי צור",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "ac834707-3fdb-460c-ab5d-ca2dd4e43218",
+    "name": "כרמל",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "be740ebb-372f-4942-94bd-4556b808bbe1",
+    "name": "ליבנה (שני)",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "2cc62d5a-97b4-4fb3-b82b-5d586b9c76f5",
+    "name": "מגדל עוז",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "a8d7d90d-cf88-4a8f-91e2-eb88e219a7b5",
+    "name": "מיצד (אספר)",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "481ff966-69fb-4bf5-a773-905a6fe43ed4",
+    "name": "מעון",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "1fb27f68-a490-4858-8e55-a7ee8792ef0c",
+    "name": "מעלה חבר (פני חבר)",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "9268bd4d-64e7-4f7a-910c-ab52e3d92965",
+    "name": "מעלה עמוס",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "7ae5990e-a296-422c-8f23-92ee2e945d75",
+    "name": "מעלה רחבעם",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "91e523a0-7a0c-47b4-b616-a8eea058ee79",
+    "name": "מעלות חלץ",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "c4322ee9-d629-462c-95cc-ac18298cfb96",
+    "name": "מצפה אביחי (גבעה 18)",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "0e2025ac-66b7-4f4a-a629-2db3443648dd",
+    "name": "מצפה דניאל",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "22713e83-e976-424f-91ed-48c7a06135b2",
+    "name": "מצפה יאיר",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "4d64edef-c7a7-43d9-979f-88b11f3870bc",
+    "name": "נגוהות",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "8e985558-6025-4b95-a3f8-3e06724c182b",
+    "name": "נגוהות מערב (מצפה לכיש)",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "e629a624-35e0-4d62-86a3-bf66003e5613",
+    "name": "נווה דניאל",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "84648038-c2f1-4839-b9b8-eb47b2e52f9a",
+    "name": "נוקדים",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "f7de38d2-5302-4074-9eda-d8338bfcf49c",
+    "name": "נצר",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "75cb7030-272d-47ad-bcb8-7edeb47b1ed4",
+    "name": "סוסיא",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "82e1319c-6cde-44a5-a891-e76b14aa9fb3",
+    "name": "סנסנה",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "01e874ae-167b-407c-b2da-19836bdeb375",
+    "name": "עשאל",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "602a50eb-5999-41da-8774-612ed8c9ac7c",
+    "name": "עתניאל",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "b7c71823-5324-4ca5-b404-e9756f68ba36",
+    "name": "פני קדם",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "18e59080-5545-40d1-ac63-b329e19c33a0",
+    "name": "קידר",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "6e2b73e0-94a5-44c9-925d-da3d2cfd9f9f",
+    "name": "קריית ארבע",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "b115ba0d-112d-4fe8-aa1f-480a049e3b3d",
+    "name": "ראש צורים",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "dc002a4e-826a-40b4-b054-0ed366482462",
+    "name": "שדה בועז",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "d19d1e92-0511-4453-8514-bf050f94e1b4",
+    "name": "שכונת אברהם אבינו",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "ab4af263-2d58-406f-a30f-91a655edb61d",
+    "name": "שמעה",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "0d115b91-8842-4fd6-857b-733cf4a41fe7",
+    "name": "תלם",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "fc2393e1-84fe-4dcb-bdfb-c2a1addc49fd",
+    "name": "תל רומיידה (אדמות ישי)",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "4177b10b-1f1e-4489-9dac-fe139891bd7a",
+    "name": "תקוע",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "יהודה",
+    "cityId": "a7001cee-a682-4e67-aa04-0f034c8ca5b8",
+    "id": "be78cda1-5259-446f-abfd-cc172732a70b",
+    "name": "תקוע ד' ותקוע ה'",
+    "displayCity": "יהודה"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "c739e076-d8e6-4aab-9d67-f6500ea26f60",
+    "name": "אבני חפץ",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "974eb458-064d-44bd-8c1b-d070a456c9a5",
+    "name": "אורנית",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "f4cf7d52-3831-40b9-8bcb-b41e31e2c2b4",
+    "name": "איתמר",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "a73fe4e6-4394-417e-9dd2-c2968e5c744a",
+    "name": "אלון מורה",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "903d0c85-402a-4cf3-b8ce-09db36cd7759",
+    "name": "אלפי מנשה",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "26de433a-075f-4af5-adbf-d7681d79d1f1",
+    "name": "אלקנה",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "e80950e7-eebf-4f48-9516-42ed4bbd79cb",
+    "name": "בית אריה",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "7e9d75b0-fdb2-472c-9566-035f1f355957",
+    "name": "ברוכין",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "da97233e-8ff9-47b7-b4f8-845b4b752733",
+    "name": "ברקן",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "98c65c15-f34f-4127-ab24-e18c02b9f3d7",
+    "name": "הר ברכה",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "be8e363e-beee-44d8-8a52-eb86f35710eb",
+    "name": "חוות גלעד",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "a8d446fc-338d-4e9f-9bf0-46c19abddcdc",
+    "name": "חוות יאיר",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "6c1f5004-5e94-4f2d-8f5a-a730ff5cc895",
+    "name": "חומש",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "fc8b649e-6c50-4f7f-a70a-72cddf90678e",
+    "name": "חיננית",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "7bccb12f-a54e-473f-923f-c9129a9717c0",
+    "name": "חרמש",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "07060142-5890-45fe-9c38-6b2c3e0b410b",
+    "name": "טל מנשה",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "f5c6aa92-e55d-450b-a8bb-1e909961e71c",
+    "name": "יצהר",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "f0a7be68-ed5e-4dec-84f0-0d7bd79464e3",
+    "name": "יקיר",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "abf67c58-9b59-405a-ad15-744222d7831f",
+    "name": "כפר תפוח",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "76edd9e1-bbc2-4cb0-bd41-8386c71bcc2b",
+    "name": "לשם",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "a663d451-3536-44f8-9fd1-7166cf209c9d",
+    "name": "מבוא דותן",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "58305cbe-f52c-4c46-a43a-fb411b2c18e1",
+    "name": "מגדלים",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "a502d147-f555-469a-bb41-84adfb3894da",
+    "name": "נופים",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "7b4878c0-dcf8-4f7f-abd8-9e617b7b488d",
+    "name": "נופי נחמיה",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "5c80903c-5094-4d61-988e-1e4b3f3260fc",
+    "name": "סלעית",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "1c2df835-5c83-471f-8c4f-cebeca67a5f5",
+    "name": "עלי זהב",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "f414ace4-3501-4f9c-a498-051ba28ef122",
+    "name": "עמנואל",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "09794ce9-4e91-4806-a3dd-3f41b99590f6",
+    "name": "ענב",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "66952125-5b4b-47a2-a3c1-242ce7a2fc9c",
+    "name": "עץ אפרים",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "a24ef229-4117-49f0-b10a-1e22b85a19c7",
+    "name": "פדואל",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "62f80353-9644-429f-b76e-e2b1a364054d",
+    "name": "צופים",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "88301a6a-663c-469c-9df4-f1b9d4bfbc1d",
+    "name": "קדומים",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "fc1fee33-9c16-48a8-ad9f-5e0beb71f67c",
+    "name": "קריית נטפים",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "d402bd73-1a64-4269-aa9e-bc9d6907aae3",
+    "name": "קרני שומרון",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "c6ffdd06-aa18-413c-8285-7d4f1140b221",
+    "name": "רבבה",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "3202b898-decd-48ee-939d-2ab8b4e3966b",
+    "name": "רחלים",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "607acbd4-1ec4-42fa-a812-d784b34f737f",
+    "name": "ריחן",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "b2eadea2-559d-4039-852c-76f991dd6429",
+    "name": "שבי שומרון",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "347561d1-090c-4bb8-9805-c950ed9733f2",
+    "name": "שחרית",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "71136113-2e1a-4d66-8e4e-659471ebcc92",
+    "name": "שערי תקווה",
+    "displayCity": "שומרון"
+  },
+  {
+    "city": "שומרון",
+    "cityId": "1aac40e9-bbf4-44c4-b70a-d13cc2256f0f",
+    "id": "104dc946-d9d8-43b4-b782-e9c021431159",
+    "name": "שקד",
+    "displayCity": "שומרון"
+  }
+]

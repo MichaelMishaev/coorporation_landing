@@ -1,3 +1,4 @@
+import { resolveSignupLocality } from "@/lib/signup-localities";
 import { submitSignup, type SubmitSignupInput, type SubmitSignupResult } from "@/lib/signup/submit-signup";
 import { prisma } from "@/lib/prisma";
 
@@ -106,6 +107,12 @@ export async function POST(request: Request): Promise<Response> {
     return jsonError(400);
   }
   const trimmedCity = cityName.trim();
+  const { locationId, catalogVersion } = body as Record<string, unknown>;
+  const hasLocation = locationId !== undefined || catalogVersion !== undefined;
+  const locality = hasLocation ? resolveSignupLocality(locationId, catalogVersion) : null;
+  if (hasLocation && (process.env.SIGNUP_LOCALITIES_ENABLED !== "true" || !locality || ![locality.city, locality.displayCity].includes(trimmedCity))) {
+    return jsonError(400);
+  }
   if (!trimmedCity || trimmedCity.length > MAX_CITY_LENGTH) {
     return jsonError(400);
   }
@@ -132,7 +139,8 @@ export async function POST(request: Request): Promise<Response> {
   const input: SubmitSignupInput = {
     fullName: trimmedName,
     phone: trimmedPhone,
-    cityName: trimmedCity,
+    cityName: locality?.city ?? trimmedCity,
+    ...(locality ? { locationId: locality.id, catalogVersion: catalogVersion as string, neighborhoodName: locality.name } : {}),
     referralCode: trimmedReferralCode,
     clientSubmissionId,
     privacyAccepted: true,

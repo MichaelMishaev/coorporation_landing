@@ -11,6 +11,9 @@ model SupportSignup {
   fullName           String   @db.VarChar(200)
   phone              String   @db.VarChar(30)
   cityName           String?  @db.VarChar(100)
+  locationId         String?  @db.VarChar(64)
+  catalogVersion     String?  @db.VarChar(40)
+  neighborhoodName   String?  @db.VarChar(200)
   referralCode       String?  @db.VarChar(64)
   clientSubmissionId String   @unique
   payloadDigest      String
