@@ -5,6 +5,9 @@ export type SubmitSignupInput = {
   fullName: string;
   phone: string;
   cityName: string | null;
+  locationId?: string;
+  catalogVersion?: string;
+  neighborhoodName?: string;
   referralCode?: string | null;
   clientSubmissionId: string;
   privacyAccepted: true;
@@ -30,6 +33,8 @@ export function computePayloadDigest(input: {
   fullName: string;
   phone: string;
   cityName?: string | null;
+  locationId?: string;
+  catalogVersion?: string;
   referralCode?: string | null;
 }): string {
   const normalized = JSON.stringify({
@@ -37,6 +42,7 @@ export function computePayloadDigest(input: {
     phone: input.phone,
     cityName: input.cityName ?? null,
     referralCode: input.referralCode ?? null,
+    ...(input.locationId ? { locationId: input.locationId, catalogVersion: input.catalogVersion } : {}),
   });
   return createHash("sha256").update(normalized).digest("hex");
 }
@@ -110,6 +116,9 @@ export async function submitSignup(
         fullName: input.fullName,
         phone: input.phone,
         cityName: input.cityName,
+        locationId: input.locationId ?? null,
+        catalogVersion: input.catalogVersion ?? null,
+        neighborhoodName: input.neighborhoodName ?? null,
         referralCode: input.referralCode ?? null,
         clientSubmissionId: input.clientSubmissionId,
         payloadDigest: digest,

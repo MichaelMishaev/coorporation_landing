@@ -20,3 +20,11 @@ describe("computePayloadDigest with referralCode", () => {
     expect(a).toBe(b);
   });
 });
+
+describe('locality digest identity', () => {
+  it('separates localities within the same parent while preserving legacy digests', () => {
+    const input = { fullName: 'משה כהן', phone: '0501234567', cityName: 'בנימין' };
+    expect(computePayloadDigest(input)).toBe(computePayloadDigest({ ...input, locationId: undefined, catalogVersion: undefined }));
+    expect(computePayloadDigest({ ...input, locationId: 'a', catalogVersion: '1' })).not.toBe(computePayloadDigest({ ...input, locationId: 'b', catalogVersion: '1' }));
+  });
+});

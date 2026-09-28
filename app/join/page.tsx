@@ -35,5 +35,5 @@ export default async function JoinPage({
   // Only a currently active mirrored code may create new attribution. A
   // revoked or unknown URL still offers the general signup form, but it no
   // longer assigns the signup to its former owner.
-  return <SignupForm prefillCity={prefillCity} referralCode={activeReferralCode} />;
+  return <SignupForm prefillCity={prefillCity} referralCode={activeReferralCode} localitiesEnabled={process.env.SIGNUP_LOCALITIES_ENABLED === "true"} />;
 }

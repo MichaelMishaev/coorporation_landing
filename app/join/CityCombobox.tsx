@@ -46,6 +46,10 @@ export function CityCombobox({ id, cities, value, onChange, required }: CityComb
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
+  useEffect(() => {
+    if (isOpen) document.getElementById(`${listboxId}-${highlightedIndex}`)?.scrollIntoView?.({ block: "nearest" });
+  }, [isOpen, highlightedIndex, listboxId, query]);
+
   function openMenu() {
     setQuery("");
     setIsOpen(true);
